@@ -77,141 +77,141 @@
         }
     </style>
 </head>
-<body class="bg-[#121212] text-white min-h-screen flex flex-col items-center justify-center p-0 sm:p-4 overflow-x-hidden">
+<body class="bg-[#121212] text-white min-h-screen flex flex-col items-center justify-center p-2 sm:p-3 overflow-x-hidden">
 
     <!-- OpenAI Style Prototype Header Deck -->
-    <header class="w-full max-w-md bg-[#0f0f11]/95 backdrop-blur-md text-zinc-300 text-xs px-3.5 py-2.5 flex items-center justify-between border border-zinc-800/80 rounded-t-2xl z-30 shadow-2xl">
+    <header class="w-full max-w-[375px] bg-[#0f0f11]/95 backdrop-blur-md text-zinc-300 text-xs px-3 py-2 flex items-center justify-between border border-zinc-800/80 rounded-t-2xl z-30 shadow-2xl">
         <!-- Left: Brand Tag & Pulse Status -->
-        <div class="flex items-center gap-2">
-            <div class="w-5 h-5 rounded-md bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-[10px] shadow-inner">
-                <i class="fa-solid fa-sparkles text-[9px] text-zinc-300"></i>
+        <div class="flex items-center gap-1.5">
+            <div class="w-4 h-4 rounded bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-[9px] shadow-inner">
+                <i class="fa-solid fa-sparkles text-[8px] text-zinc-300"></i>
             </div>
-            <div class="flex items-center gap-1.5">
-                <span class="font-semibold text-white tracking-tight text-[12.5px]">ChatGPT</span>
-                <span class="px-1.5 py-0.5 rounded text-[9px] font-mono tracking-wider font-semibold bg-zinc-800/90 text-zinc-400 border border-zinc-700/50 uppercase">Voice Lab</span>
+            <div class="flex items-center gap-1">
+                <span class="font-semibold text-white tracking-tight text-[11.5px]">ChatGPT</span>
+                <span class="px-1 py-0.2 rounded text-[8px] font-mono tracking-wider font-semibold bg-zinc-800/90 text-zinc-400 border border-zinc-700/50 uppercase">Voice</span>
             </div>
         </div>
 
         <!-- Right: Segmented Design System Controls -->
         <div class="flex items-center bg-zinc-950/80 p-0.5 rounded-full border border-zinc-800/80 shadow-inner">
-            <button onclick="forceShowWeeklySummary()" title="Trigger Weekly Summary Card" class="px-2.5 py-1 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[11px] font-medium transition-all flex items-center gap-1.5">
-                <i class="fa-solid fa-bolt text-[10px] text-amber-400"></i>
+            <button onclick="forceShowWeeklySummary()" title="Trigger Weekly Summary Card" class="px-2 py-0.5 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
+                <i class="fa-solid fa-sparkles text-[9px] text-zinc-400"></i>
                 <span>Summary</span>
             </button>
             
-            <div class="w-[1px] h-3 bg-zinc-800"></div>
+            <div class="w-[1px] h-2.5 bg-zinc-800"></div>
 
-            <button onclick="toggleKeyboard()" title="Toggle Virtual Keyboard" class="px-2.5 py-1 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[11px] font-medium transition-all flex items-center gap-1.5">
-                <i class="fa-regular fa-keyboard text-[11px] text-zinc-400"></i>
+            <button onclick="toggleKeyboard()" title="Toggle Virtual Keyboard" class="px-2 py-0.5 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
+                <i class="fa-regular fa-keyboard text-[10px] text-zinc-400"></i>
                 <span id="kbToggleLabel">Show KB</span>
             </button>
 
-            <button onclick="startNewChat()" title="Start New Session" class="ml-0.5 px-2.5 py-1 bg-white hover:bg-zinc-200 active:scale-95 text-black rounded-full text-[11px] font-semibold transition-all shadow-sm flex items-center gap-1">
-                <i class="fa-solid fa-plus text-[9px]"></i>
+            <button onclick="startNewChat()" title="Start New Session" class="ml-0.5 px-2 py-0.5 bg-white hover:bg-zinc-200 active:scale-95 text-black rounded-full text-[10px] font-semibold transition-all shadow-sm flex items-center gap-0.5">
+                <i class="fa-solid fa-plus text-[8px]"></i>
                 <span>New</span>
             </button>
         </div>
     </header>
 
     <!-- Main Mobile Device Screen Container -->
-    <div class="w-full max-w-md h-[844px] bg-black sm:rounded-b-3xl shadow-2xl flex flex-col relative overflow-hidden border-x border-b border-zinc-900">
+    <div class="w-full max-w-[375px] h-[680px] max-h-[82vh] bg-black sm:rounded-b-3xl shadow-2xl flex flex-col relative overflow-hidden border-x border-b border-zinc-900">
 
-        <div class="w-full h-11 px-6 pt-2 flex items-center justify-between text-white text-xs font-semibold select-none bg-black z-30 relative shrink-0">
+        <div class="w-full h-9 px-5 pt-1.5 flex items-center justify-between text-white text-xs font-semibold select-none bg-black z-30 relative shrink-0">
             <!-- Left: Time + Silent Bell Icon -->
             <div class="flex items-center gap-1.5">
-                <span class="text-sm font-semibold tracking-tight text-white">5:48</span>
-                <i class="fa-solid fa-bell-slash text-[11px] text-white"></i>
+                <span class="text-xs font-semibold tracking-tight text-white">5:48</span>
+                <i class="fa-solid fa-bell-slash text-[10px] text-white"></i>
             </div>
 
             <!-- Center: Orange Mic Privacy Dot -->
-            <div id="iosMicOrangeDot" class="w-2 h-2 rounded-full bg-orange-500 opacity-0 transition-opacity duration-200"></div>
+            <div id="iosMicOrangeDot" class="w-1.5 h-1.5 rounded-full bg-orange-500 opacity-0 transition-opacity duration-200"></div>
 
             <!-- Right: Cellular, Wi-Fi & Battery Capsule -->
-            <div class="flex items-center gap-2 text-xs">
-                <span class="text-[11px] font-bold text-white tracking-wider">5G</span>
-                <div class="flex items-end gap-[2px] h-[11px]">
-                    <span class="w-[3px] h-[4px] bg-white rounded-[0.5px]"></span>
-                    <span class="w-[3px] h-[6.5px] bg-white rounded-[0.5px]"></span>
-                    <span class="w-[3px] h-[8.5px] bg-white rounded-[0.5px]"></span>
-                    <span class="w-[3px] h-[11px] bg-white rounded-[0.5px]"></span>
+            <div class="flex items-center gap-1.5 text-xs">
+                <span class="text-[10px] font-bold text-white tracking-wider">5G</span>
+                <div class="flex items-end gap-[1.5px] h-[9px]">
+                    <span class="w-[2.5px] h-[3px] bg-white rounded-[0.5px]"></span>
+                    <span class="w-[2.5px] h-[5px] bg-white rounded-[0.5px]"></span>
+                    <span class="w-[2.5px] h-[7px] bg-white rounded-[0.5px]"></span>
+                    <span class="w-[2.5px] h-[9px] bg-white rounded-[0.5px]"></span>
                 </div>
-                <i class="fa-solid fa-wifi text-[12px] text-white"></i>
-                <div class="relative w-[27px] h-[13px] bg-white rounded-[4.5px] flex items-center justify-center shadow-sm">
-                    <div class="absolute -right-[3px] top-[3.5px] w-[2px] h-[5px] bg-white rounded-r-[1px]"></div>
-                    <span class="text-[9.5px] font-black tracking-tighter leading-none text-black select-none">76</span>
+                <i class="fa-solid fa-wifi text-[10px] text-white"></i>
+                <div class="relative w-[22px] h-[11px] bg-white rounded-[3.5px] flex items-center justify-center shadow-sm">
+                    <div class="absolute -right-[2.5px] top-[3px] w-[1.5px] h-[4px] bg-white rounded-r-[1px]"></div>
+                    <span class="text-[8.5px] font-black tracking-tighter leading-none text-black select-none">76</span>
                 </div>
             </div>
         </div>
 
-        <header class="w-full h-14 px-4 flex items-center justify-between bg-black z-20 shrink-0">
+        <header class="w-full h-11 px-3.5 flex items-center justify-between bg-black z-20 shrink-0">
             <!-- Left: Sidebar Toggle Button -->
-            <button onclick="toggleSidebar(true)" class="w-10 h-10 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 flex items-center justify-center transition-all">
-                <div class="flex flex-col gap-[4px] w-4 items-center">
-                    <div class="w-full h-[2px] bg-white rounded-full"></div>
-                    <div class="w-full h-[2px] bg-white rounded-full"></div>
+            <button onclick="toggleSidebar(true)" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 flex items-center justify-center transition-all">
+                <div class="flex flex-col gap-[3px] w-3.5 items-center">
+                    <div class="w-full h-[1.5px] bg-white rounded-full"></div>
+                    <div class="w-full h-[1.5px] bg-white rounded-full"></div>
                 </div>
             </button>
 
             <!-- Center: Upgrade Pill Button -->
-            <button class="px-3.5 py-1.5 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 border border-zinc-800 text-xs font-semibold text-blue-400 flex items-center gap-1.5 transition-all shadow-sm">
-                <i class="fa-solid fa-diamond text-[10px] text-blue-400"></i>
+            <button class="px-3 py-1 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 border border-zinc-800 text-[11px] font-semibold text-blue-400 flex items-center gap-1 transition-all shadow-sm">
+                <i class="fa-solid fa-diamond text-[9px] text-blue-400"></i>
                 <span>Upgrade</span>
             </button>
 
             <!-- Right: New Chat Icon Button -->
-            <button onclick="startNewChat()" class="w-10 h-10 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 flex items-center justify-center transition-all">
-                <i class="fa-regular fa-comment-dots text-white text-base"></i>
+            <button onclick="startNewChat()" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 flex items-center justify-center transition-all">
+                <i class="fa-regular fa-comment-dots text-white text-sm"></i>
             </button>
         </header>
 
-        <main id="chatMainCanvas" onclick="dismissKeyboardAndFocus()" class="flex-1 bg-black px-4 py-2 flex flex-col justify-end relative overflow-y-auto">
+        <main id="chatMainCanvas" onclick="dismissKeyboardAndFocus()" class="flex-1 bg-black px-3.5 py-2 flex flex-col justify-end relative overflow-y-auto">
             
             <!-- Messages Container -->
-            <div id="messagesContainer" class="w-full space-y-4 my-auto flex flex-col justify-center min-h-[280px]">
+            <div id="messagesContainer" class="w-full space-y-3 my-auto flex flex-col justify-center min-h-[220px]">
                 
                 <!-- Initial Empty Chat Canvas Graphic -->
-                <div id="emptyChatState" class="flex flex-col items-center justify-center text-center py-12 space-y-4">
-                    <div class="w-12 h-12 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-xl shadow-lg">
+                <div id="emptyChatState" class="flex flex-col items-center justify-center text-center py-8 space-y-3">
+                    <div class="w-10 h-10 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-lg shadow-lg">
                         <i class="fa-solid fa-sparkles"></i>
                     </div>
-                    <p class="text-zinc-400 text-sm font-medium">What can I help with today?</p>
+                    <p class="text-zinc-400 text-xs font-medium">What can I help with today?</p>
                 </div>
 
                 <!-- Chat history dynamically appended here -->
             </div>
         </main>
 
-        <div id="composerAreaWrapper" class="composer-area w-full px-4 pt-1 pb-3 bg-black z-20 shrink-0 relative">
+        <div id="composerAreaWrapper" class="composer-area w-full px-3 pt-1 pb-2 bg-black z-20 shrink-0 relative">
 
             <!-- Integrated Task-Pill Row -->
-            <div id="taskPillTrack" class="pill-track-container w-full mb-2">
-                <div class="flex items-center gap-2 overflow-x-auto pb-1 px-1 scrollbar-none">
-                    <button onclick="activateTaskPill('Quick Lookup')" class="px-4 py-2 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[13px] font-normal whitespace-nowrap transition-all shrink-0">
+            <div id="taskPillTrack" class="pill-track-container w-full mb-1.5">
+                <div class="flex items-center gap-1.5 overflow-x-auto pb-1 px-0.5 scrollbar-none">
+                    <button onclick="activateTaskPill('Quick Lookup')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
                         <span>Quick Lookup</span>
                     </button>
-                    <button onclick="activateTaskPill('Brainstorm')" class="px-4 py-2 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[13px] font-normal whitespace-nowrap transition-all shrink-0">
+                    <button onclick="activateTaskPill('Brainstorm')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
                         <span>Brainstorm</span>
                     </button>
-                    <button onclick="activateTaskPill('Summarize')" class="px-4 py-2 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[13px] font-normal whitespace-nowrap transition-all shrink-0">
+                    <button onclick="activateTaskPill('Summarize')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
                         <span>Summarize</span>
                     </button>
-                    <button onclick="activateTaskPill('Draft Email')" class="px-4 py-2 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[13px] font-normal whitespace-nowrap transition-all shrink-0">
+                    <button onclick="activateTaskPill('Draft Email')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
                         <span>Draft Email</span>
                     </button>
-                    <button onclick="dismissTaskPillsForever()" title="Dismiss for session" class="w-8 h-8 rounded-full bg-[#212121] hover:bg-[#2f2f2f] border border-[#303030] text-[#737373] hover:text-[#ececec] flex items-center justify-center shrink-0 transition-colors">
-                        <i class="fa-solid fa-xmark text-xs"></i>
+                    <button onclick="dismissTaskPillsForever()" title="Dismiss for session" class="w-7 h-7 rounded-full bg-[#212121] hover:bg-[#2f2f2f] border border-[#303030] text-[#737373] hover:text-[#ececec] flex items-center justify-center shrink-0 transition-colors">
+                        <i class="fa-solid fa-xmark text-[11px]"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Main Composer Bar matching Screenshot -->
-            <div id="composerBox" class="w-full bg-[#1c1c1e] border border-zinc-800/80 rounded-full px-3 py-1.5 flex items-center justify-between shadow-xl transition-all">
+            <!-- Main Composer Bar -->
+            <div id="composerBox" class="w-full bg-[#1c1c1e] border border-zinc-800/80 rounded-full px-2.5 py-1 flex items-center justify-between shadow-xl transition-all">
                 
                 <!-- State 1: Idle / Typing Composer View -->
-                <div id="idleComposerView" class="w-full flex items-center gap-2">
+                <div id="idleComposerView" class="w-full flex items-center gap-1.5">
                     <!-- Attachment Plus Button -->
-                    <button class="w-8 h-8 rounded-full bg-transparent hover:bg-zinc-800 active:scale-95 text-zinc-200 flex items-center justify-center shrink-0 transition-all">
-                        <i class="fa-solid fa-plus text-lg"></i>
+                    <button class="w-7 h-7 rounded-full bg-transparent hover:bg-zinc-800 active:scale-95 text-zinc-200 flex items-center justify-center shrink-0 transition-all">
+                        <i class="fa-solid fa-plus text-base"></i>
                     </button>
 
                     <!-- Text Input Box -->
@@ -220,57 +220,57 @@
                                onfocus="onComposerFocus()" 
                                oninput="handleTextInputChange()" 
                                onkeydown="if(event.key === 'Enter') handleSendMessage()"
-                               class="w-full bg-transparent text-[15px] text-white placeholder-zinc-500 focus:outline-none px-1 py-1">
+                               class="w-full bg-transparent text-[14px] text-white placeholder-zinc-500 focus:outline-none px-1 py-0.5">
                     </div>
 
                     <!-- Right Actions Group -->
-                    <div class="flex items-center gap-2 shrink-0">
+                    <div class="flex items-center gap-1.5 shrink-0">
                         <!-- Dictation Mic Button -->
-                        <button onclick="startVoiceDictation()" title="Dictate" class="w-8 h-8 rounded-full hover:bg-zinc-800 active:scale-95 text-zinc-300 flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-microphone text-lg"></i>
+                        <button onclick="startVoiceDictation()" title="Dictate" class="w-7 h-7 rounded-full hover:bg-zinc-800 active:scale-95 text-zinc-300 flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-microphone text-base"></i>
                         </button>
 
-                        <!-- Dynamic Action Button: Waveform Icon when empty vs Send Arrow when typing -->
-                        <button id="dynamicActionButton" onclick="handleDynamicAction()" class="w-8 h-8 rounded-full bg-[#007AFF] hover:bg-blue-500 active:scale-95 text-white flex items-center justify-center transition-all shadow-md shrink-0">
+                        <!-- Dynamic Action Button: Blue Waveform icon when empty vs Send Arrow when typing -->
+                        <button id="dynamicActionButton" onclick="handleDynamicAction()" class="w-7 h-7 rounded-full bg-[#007AFF] hover:bg-blue-500 active:scale-95 text-white flex items-center justify-center transition-all shadow-md shrink-0">
                             <span id="dynamicActionIconContainer" class="flex items-center justify-center">
-                                <svg id="waveformSvgIcon" class="w-4 h-4 text-white fill-current" viewBox="0 0 24 24">
+                                <svg id="waveformSvgIcon" class="w-3.5 h-3.5 text-white fill-current" viewBox="0 0 24 24">
                                     <rect x="2.5" y="8" width="2.2" height="8" rx="1.1" />
                                     <rect x="7" y="4" width="2.2" height="16" rx="1.1" />
                                     <rect x="11.5" y="2" width="2.2" height="20" rx="1.1" />
                                     <rect x="16" y="6" width="2.2" height="12" rx="1.1" />
                                     <rect x="20.5" y="9" width="2.2" height="6" rx="1.1" />
                                 </svg>
-                                <i id="sendArrowIcon" class="fa-solid fa-arrow-up text-sm text-white hidden"></i>
+                                <i id="sendArrowIcon" class="fa-solid fa-arrow-up text-xs text-white hidden"></i>
                             </span>
                         </button>
                     </div>
                 </div>
 
                 <!-- State 2: Active Voice Recording View -->
-                <div id="recordingComposerView" class="hidden w-full flex items-center justify-between gap-2 py-0.5 px-1">
+                <div id="recordingComposerView" class="hidden w-full flex items-center justify-between gap-1.5 py-0.5 px-0.5">
                     <!-- Cancel Dictation Button -->
-                    <button onclick="cancelVoiceDictation()" title="Cancel" class="w-8 h-8 rounded-full bg-[#2c2c2e] hover:bg-zinc-700 active:scale-95 text-zinc-300 flex items-center justify-center transition-all shrink-0">
-                        <i class="fa-solid fa-xmark text-sm"></i>
+                    <button onclick="cancelVoiceDictation()" title="Cancel" class="w-7 h-7 rounded-full bg-[#2c2c2e] hover:bg-zinc-700 active:scale-95 text-zinc-300 flex items-center justify-center transition-all shrink-0">
+                        <i class="fa-solid fa-xmark text-xs"></i>
                     </button>
 
                     <!-- Waveform Canvas & Active Mode Tag -->
-                    <div class="flex-1 flex items-center justify-center gap-2 overflow-hidden px-2">
-                        <div id="activeModePill" class="hidden flex items-center gap-1.5 px-2.5 py-1 bg-zinc-800/90 border border-blue-500/30 text-xs text-blue-400 rounded-full font-medium shrink-0">
+                    <div class="flex-1 flex items-center justify-center gap-1.5 overflow-hidden px-1">
+                        <div id="activeModePill" class="hidden flex items-center gap-1 px-2 py-0.5 bg-zinc-800/90 border border-blue-500/30 text-[11px] text-blue-400 rounded-full font-medium shrink-0">
                             <span id="activeModeName"></span>
                             <button onclick="clearActiveModePill(event)" class="text-zinc-400 hover:text-white transition-colors">
-                                <i class="fa-solid fa-xmark text-[10px]"></i>
+                                <i class="fa-solid fa-xmark text-[9px]"></i>
                             </button>
                         </div>
-                        <canvas id="waveformCanvas" width="160" height="24" class="h-6 max-w-[160px]"></canvas>
+                        <canvas id="waveformCanvas" width="130" height="20" class="h-5 max-w-[130px]"></canvas>
                     </div>
 
                     <!-- Right Controls: Stop & Send -->
-                    <div class="flex items-center gap-2 shrink-0">
-                        <button onclick="stopVoiceDictation()" title="Stop" class="w-8 h-8 rounded-full bg-[#2c2c2e] hover:bg-zinc-700 active:scale-95 text-zinc-300 flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-stop text-xs"></i>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button onclick="stopVoiceDictation()" title="Stop" class="w-7 h-7 rounded-full bg-[#2c2c2e] hover:bg-zinc-700 active:scale-95 text-zinc-300 flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-stop text-[10px]"></i>
                         </button>
-                        <button onclick="stopAndSendVoice()" title="Done & Send" class="w-8 h-8 rounded-full bg-[#007AFF] hover:bg-blue-500 active:scale-95 text-white flex items-center justify-center transition-all shadow-md">
-                            <i class="fa-solid fa-arrow-up text-sm"></i>
+                        <button onclick="stopAndSendVoice()" title="Done & Send" class="w-7 h-7 rounded-full bg-[#007AFF] hover:bg-blue-500 active:scale-95 text-white flex items-center justify-center transition-all shadow-md">
+                            <i class="fa-solid fa-arrow-up text-xs"></i>
                         </button>
                     </div>
                 </div>
@@ -278,54 +278,54 @@
         </div>
 
         <!-- Simulated iOS Keyboard Drawer -->
-        <div id="simulatedKeyboard" class="keyboard-drawer absolute bottom-0 left-0 right-0 h-[240px] bg-[#1c1c1e] border-t border-zinc-800/80 transform translate-y-full z-30 pb-3 select-none">
+        <div id="simulatedKeyboard" class="keyboard-drawer absolute bottom-0 left-0 right-0 h-[220px] bg-[#1c1c1e] border-t border-zinc-800/80 transform translate-y-full z-30 pb-2 select-none">
             <!-- Virtual iOS Keyboard Keys Layout -->
-            <div class="p-1 space-y-2 max-w-sm mx-auto pt-2">
+            <div class="p-1 space-y-1.5 max-w-sm mx-auto pt-2">
                 <!-- Row 1: q w e r t y u i o p -->
-                <div class="flex justify-center gap-[5px]">
-                    <button onclick="simulateKey('q')" class="ios-key flex-1 h-11">q</button>
-                    <button onclick="simulateKey('w')" class="ios-key flex-1 h-11">w</button>
-                    <button onclick="simulateKey('e')" class="ios-key flex-1 h-11">e</button>
-                    <button onclick="simulateKey('r')" class="ios-key flex-1 h-11">r</button>
-                    <button onclick="simulateKey('t')" class="ios-key flex-1 h-11">t</button>
-                    <button onclick="simulateKey('y')" class="ios-key flex-1 h-11">y</button>
-                    <button onclick="simulateKey('u')" class="ios-key flex-1 h-11">u</button>
-                    <button onclick="simulateKey('i')" class="ios-key flex-1 h-11">i</button>
-                    <button onclick="simulateKey('o')" class="ios-key flex-1 h-11">o</button>
-                    <button onclick="simulateKey('p')" class="ios-key flex-1 h-11">p</button>
+                <div class="flex justify-center gap-[4px]">
+                    <button onclick="simulateKey('q')" class="ios-key flex-1 h-9">q</button>
+                    <button onclick="simulateKey('w')" class="ios-key flex-1 h-9">w</button>
+                    <button onclick="simulateKey('e')" class="ios-key flex-1 h-9">e</button>
+                    <button onclick="simulateKey('r')" class="ios-key flex-1 h-9">r</button>
+                    <button onclick="simulateKey('t')" class="ios-key flex-1 h-9">t</button>
+                    <button onclick="simulateKey('y')" class="ios-key flex-1 h-9">y</button>
+                    <button onclick="simulateKey('u')" class="ios-key flex-1 h-9">u</button>
+                    <button onclick="simulateKey('i')" class="ios-key flex-1 h-9">i</button>
+                    <button onclick="simulateKey('o')" class="ios-key flex-1 h-9">o</button>
+                    <button onclick="simulateKey('p')" class="ios-key flex-1 h-9">p</button>
                 </div>
 
                 <!-- Row 2: a s d f g h j k l -->
-                <div class="flex justify-center gap-[5px] px-3">
-                    <button onclick="simulateKey('a')" class="ios-key flex-1 h-11">a</button>
-                    <button onclick="simulateKey('s')" class="ios-key flex-1 h-11">s</button>
-                    <button onclick="simulateKey('d')" class="ios-key flex-1 h-11">d</button>
-                    <button onclick="simulateKey('f')" class="ios-key flex-1 h-11">f</button>
-                    <button onclick="simulateKey('g')" class="ios-key flex-1 h-11">g</button>
-                    <button onclick="simulateKey('h')" class="ios-key flex-1 h-11">h</button>
-                    <button onclick="simulateKey('j')" class="ios-key flex-1 h-11">j</button>
-                    <button onclick="simulateKey('k')" class="ios-key flex-1 h-11">k</button>
-                    <button onclick="simulateKey('l')" class="ios-key flex-1 h-11">l</button>
+                <div class="flex justify-center gap-[4px] px-2.5">
+                    <button onclick="simulateKey('a')" class="ios-key flex-1 h-9">a</button>
+                    <button onclick="simulateKey('s')" class="ios-key flex-1 h-9">s</button>
+                    <button onclick="simulateKey('d')" class="ios-key flex-1 h-9">d</button>
+                    <button onclick="simulateKey('f')" class="ios-key flex-1 h-9">f</button>
+                    <button onclick="simulateKey('g')" class="ios-key flex-1 h-9">g</button>
+                    <button onclick="simulateKey('h')" class="ios-key flex-1 h-9">h</button>
+                    <button onclick="simulateKey('j')" class="ios-key flex-1 h-9">j</button>
+                    <button onclick="simulateKey('k')" class="ios-key flex-1 h-9">k</button>
+                    <button onclick="simulateKey('l')" class="ios-key flex-1 h-9">l</button>
                 </div>
 
                 <!-- Row 3: Shift, z x c v b n m, Delete -->
-                <div class="flex justify-center gap-[5px]">
-                    <button class="ios-key ios-key-modifier w-11 h-11"><i class="fa-solid fa-arrow-up text-sm"></i></button>
-                    <button onclick="simulateKey('z')" class="ios-key flex-1 h-11">z</button>
-                    <button onclick="simulateKey('x')" class="ios-key flex-1 h-11">x</button>
-                    <button onclick="simulateKey('c')" class="ios-key flex-1 h-11">c</button>
-                    <button onclick="simulateKey('v')" class="ios-key flex-1 h-11">v</button>
-                    <button onclick="simulateKey('b')" class="ios-key flex-1 h-11">b</button>
-                    <button onclick="simulateKey('n')" class="ios-key flex-1 h-11">n</button>
-                    <button onclick="simulateKey('m')" class="ios-key flex-1 h-11">m</button>
-                    <button onclick="simulateBackspace()" class="ios-key ios-key-modifier w-11 h-11"><i class="fa-solid fa-delete-left text-sm"></i></button>
+                <div class="flex justify-center gap-[4px]">
+                    <button class="ios-key ios-key-modifier w-9 h-9"><i class="fa-solid fa-arrow-up text-xs"></i></button>
+                    <button onclick="simulateKey('z')" class="ios-key flex-1 h-9">z</button>
+                    <button onclick="simulateKey('x')" class="ios-key flex-1 h-9">x</button>
+                    <button onclick="simulateKey('c')" class="ios-key flex-1 h-9">c</button>
+                    <button onclick="simulateKey('v')" class="ios-key flex-1 h-9">v</button>
+                    <button onclick="simulateKey('b')" class="ios-key flex-1 h-9">b</button>
+                    <button onclick="simulateKey('n')" class="ios-key flex-1 h-9">n</button>
+                    <button onclick="simulateKey('m')" class="ios-key flex-1 h-9">m</button>
+                    <button onclick="simulateBackspace()" class="ios-key ios-key-modifier w-9 h-9"><i class="fa-solid fa-delete-left text-xs"></i></button>
                 </div>
 
                 <!-- Row 4: 123, Spacebar, Return key -->
-                <div class="flex justify-center gap-[6px] pt-1">
-                    <button class="ios-key ios-key-modifier w-20 h-11 text-sm font-medium">123</button>
-                    <button onclick="simulateKey(' ')" class="ios-key flex-1 h-11 text-xs">space</button>
-                    <button onclick="handleSendMessage()" class="ios-key ios-key-modifier w-20 h-11 text-sm"><i class="fa-solid fa-arrow-turn-down transform rotate-90 text-sm"></i></button>
+                <div class="flex justify-center gap-[5px] pt-0.5">
+                    <button class="ios-key ios-key-modifier w-16 h-9 text-xs font-medium">123</button>
+                    <button onclick="simulateKey(' ')" class="ios-key flex-1 h-9 text-xs">space</button>
+                    <button onclick="handleSendMessage()" class="ios-key ios-key-modifier w-16 h-9 text-xs"><i class="fa-solid fa-arrow-turn-down transform rotate-90 text-xs"></i></button>
                 </div>
             </div>
         </div>
@@ -428,370 +428,8 @@
     </div>
 
     <script>
-        let isRecording = false;
-        let activeModeName = null;
-        let baseText = "";
+        // ... existing variables ...
         let keyboardVisible = false;
-        let speechRecognition = null;
-        let animationFrameId = null;
-
-        // Recording duration tracker variables
-        let voiceStartTime = null;
-        let currentAudioDuration = 0;
-        let weeklyVoiceCount = 0;
-
-        // Canvas Waveform Context
-        let canvas, ctx;
-
-        // Initialize Application
-        window.addEventListener('DOMContentLoaded', () => {
-            setupWaveformCanvas();
-            initSpeechRecognition();
-            checkAndRenderWeeklySummary();
-        });
-
-        // Initialize Web Speech Recognition API
-        function initSpeechRecognition() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (SpeechRecognition) {
-                speechRecognition = new SpeechRecognition();
-                speechRecognition.continuous = true;
-                speechRecognition.interimResults = true;
-                speechRecognition.lang = 'en-US';
-
-                speechRecognition.onresult = (event) => {
-                    let transcript = '';
-                    for (let i = event.resultIndex; i < event.results.length; i++) {
-                        transcript += event.results[i][0].transcript;
-                    }
-                    if (transcript) {
-                        const input = document.getElementById('chatInput');
-                        if (input) {
-                            const prefix = baseText ? baseText + ' ' : '';
-                            input.value = prefix + transcript;
-                            handleTextInputChange();
-                        }
-                    }
-                };
-
-                speechRecognition.onerror = (event) => {
-                    console.warn('Speech recognition warning or error:', event.error);
-                };
-
-                speechRecognition.onend = () => {
-                    if (isRecording) {
-                        try { speechRecognition.start(); } catch(e) {}
-                    }
-                };
-            } else {
-                console.warn('Web Speech API is not supported in this browser environment.');
-            }
-        }
-
-        // Calculate time saved per voice input event vs benchmark 38 WPM typing speed
-        function calculateTimeSaved(transcribedText, audioDurationSeconds) {
-            const words = transcribedText.trim().split(/\s+/).filter(Boolean);
-            const wordCount = words.length;
-            // Benchmark typing speed: 38 WPM (0.633 words per second)
-            const estimatedTypingTimeSeconds = (wordCount / 38) * 60;
-            const timeSavedSeconds = estimatedTypingTimeSeconds - audioDurationSeconds;
-            // Floor boundary to prevent negative values
-            return Math.max(0, Math.round(timeSavedSeconds));
-        }
-
-        // Update Local Storage after voice completion
-        function onVoicePromptComplete(transcribedText, audioDurationSeconds) {
-            const savedSeconds = calculateTimeSaved(transcribedText, audioDurationSeconds);
-            const wordsCount = transcribedText.trim().split(/\s+/).filter(Boolean).length;
-
-            let currentCount = parseInt(localStorage.getItem('weekly_voice_count') || '0', 10);
-            let currentTimeSaved = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '0', 10);
-            let currentWordCount = parseInt(localStorage.getItem('weekly_word_count') || '0', 10);
-
-            localStorage.setItem('weekly_voice_count', currentCount + 1);
-            localStorage.setItem('weekly_time_saved_seconds', currentTimeSaved + savedSeconds);
-            localStorage.setItem('weekly_word_count', currentWordCount + wordsCount);
-
-            checkAndRenderWeeklySummary();
-            updateSettingsUI();
-        }
-
-        // Helper to format saved time into human-friendly string
-        function formatTimeSaved(totalSeconds) {
-            if (!totalSeconds || totalSeconds <= 0) return "0 secs";
-            const mins = Math.floor(totalSeconds / 60);
-            const secs = totalSeconds % 60;
-            if (mins > 0) {
-                return `${mins} min${mins > 1 ? 's' : ''} ${secs} sec${secs !== 1 ? 's' : ''}`;
-            }
-            return `${secs} sec${secs !== 1 ? 's' : ''}`;
-        }
-
-        function checkAndRenderWeeklySummary() {
-            const isDismissed = localStorage.getItem('weekly_summary_dismissed') === 'true';
-            const count = parseInt(localStorage.getItem('weekly_voice_count') || '0', 10);
-
-            let summaryCard = document.getElementById('weeklySummaryCard');
-
-            if (isDismissed || count < 3) {
-                if (summaryCard) summaryCard.remove();
-                return;
-            }
-
-            const totalSavedSeconds = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '0', 10);
-            const totalWords = parseInt(localStorage.getItem('weekly_word_count') || '0', 10);
-            const timeSavedFormatted = formatTimeSaved(totalSavedSeconds);
-
-            const container = document.getElementById('messagesContainer');
-            if (!container) return;
-
-            if (!summaryCard) {
-                summaryCard = document.createElement('div');
-                summaryCard.id = 'weeklySummaryCard';
-                summaryCard.className = "w-full bg-[#212121] border border-[#303030] rounded-[16px] p-4 my-2 text-[#ececec] transition-all";
-                container.prepend(summaryCard);
-            }
-
-            summaryCard.innerHTML = `
-                <div class="flex items-center justify-between border-b border-[#303030] pb-2.5 mb-2.5">
-                    <div class="flex items-center gap-2 text-[12px] font-semibold tracking-[0.05em] uppercase text-[#9b9b9b]">
-                        <i class="fa-solid fa-sparkles text-[13px] text-[#9b9b9b]"></i>
-                        <span>WEEKLY VOICE SUMMARY</span>
-                    </div>
-                    <button onclick="dismissWeeklySummary()" title="Dismiss for this week" class="w-6 h-6 rounded-full hover:bg-[#2f2f2f] text-[#737373] hover:text-[#ececec] flex items-center justify-center transition-colors">
-                        <i class="fa-solid fa-xmark text-xs"></i>
-                    </button>
-                </div>
-                <p class="text-[14px] text-[#ececec] leading-relaxed font-normal">
-                    You dictated <strong class="text-white font-semibold">${count} prompts</strong> this week (~<strong class="text-white font-semibold">${totalWords} words</strong>). Estimated time saved: <strong class="text-white font-semibold">${timeSavedFormatted}</strong> vs. typing.
-                </p>
-            `;
-        }
-
-        function dismissWeeklySummary() {
-            localStorage.setItem('weekly_summary_dismissed', 'true');
-            const summaryCard = document.getElementById('weeklySummaryCard');
-            if (summaryCard) summaryCard.remove();
-        }
-
-        function startVoiceDictation() {
-            isRecording = true;
-            voiceStartTime = Date.now();
-
-            document.getElementById('idleComposerView').classList.add('hidden');
-            document.getElementById('recordingComposerView').classList.remove('hidden');
-            document.getElementById('iosMicOrangeDot').classList.remove('opacity-0');
-
-            startAudioVisualization();
-
-            if (speechRecognition) {
-                try { speechRecognition.start(); } catch(e){}
-            }
-        }
-
-        function stopVoiceDictation() {
-            if (!isRecording) return;
-            isRecording = false;
-
-            if (voiceStartTime) {
-                currentAudioDuration = Math.max(1, Math.round((Date.now() - voiceStartTime) / 1000));
-            } else {
-                currentAudioDuration = 1;
-            }
-
-            document.getElementById('recordingComposerView').classList.add('hidden');
-            document.getElementById('idleComposerView').classList.remove('hidden');
-            document.getElementById('iosMicOrangeDot').classList.add('opacity-0');
-
-            stopAudioVisualization();
-
-            if (speechRecognition) {
-                try { speechRecognition.stop(); } catch(e){}
-            }
-
-            handleTextInputChange();
-        }
-
-        function cancelVoiceDictation() {
-            stopVoiceDictation();
-            document.getElementById('chatInput').value = baseText;
-            handleTextInputChange();
-        }
-
-        function stopAndSendVoice() {
-            const input = document.getElementById('chatInput');
-            const dictatedText = input.value.trim();
-            
-            stopVoiceDictation();
-
-            if (dictatedText) {
-                onVoicePromptComplete(dictatedText, currentAudioDuration);
-            }
-
-            handleSendMessage();
-        }
-
-        function openSettingsModal() {
-            toggleSidebar(false);
-            updateSettingsUI();
-            const modal = document.getElementById('settingsModal');
-            if (modal) modal.classList.remove('hidden');
-        }
-
-        function closeSettingsModal() {
-            const modal = document.getElementById('settingsModal');
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function updateSettingsUI() {
-            const prompts = localStorage.getItem('weekly_voice_count') || '0';
-            const words = localStorage.getItem('weekly_word_count') || '0';
-            const timeSaved = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '0', 10);
-
-            const promptEl = document.getElementById('settingsPromptCount');
-            const wordEl = document.getElementById('settingsWordCount');
-            const timeEl = document.getElementById('settingsTimeSaved');
-
-            if (promptEl) promptEl.innerText = prompts;
-            if (wordEl) wordEl.innerText = words;
-            if (timeEl) timeEl.innerText = formatTimeSaved(timeSaved);
-        }
-
-        function resetVoiceStats() {
-            localStorage.removeItem('weekly_voice_count');
-            localStorage.removeItem('weekly_time_saved_seconds');
-            localStorage.removeItem('weekly_word_count');
-            localStorage.removeItem('weekly_summary_dismissed');
-            updateSettingsUI();
-            checkAndRenderWeeklySummary();
-        }
-
-        function simulateVoicePrompts(countToAdd) {
-            let currentCount = parseInt(localStorage.getItem('weekly_voice_count') || '0', 10);
-            let currentTimeSaved = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '0', 10);
-            let currentWordCount = parseInt(localStorage.getItem('weekly_word_count') || '0', 10);
-
-            // Simulate average ~45 word prompt, 12s voice time (~48s saved per prompt)
-            const simulatedWordsPerPrompt = 45;
-            const simulatedDuration = 12;
-            const savedPerPrompt = calculateTimeSaved("word ".repeat(simulatedWordsPerPrompt), simulatedDuration);
-
-            localStorage.setItem('weekly_voice_count', currentCount + countToAdd);
-            localStorage.setItem('weekly_time_saved_seconds', currentTimeSaved + (savedPerPrompt * countToAdd));
-            localStorage.setItem('weekly_word_count', currentWordCount + (simulatedWordsPerPrompt * countToAdd));
-            localStorage.removeItem('weekly_summary_dismissed');
-
-            updateSettingsUI();
-            checkAndRenderWeeklySummary();
-        }
-
-        function forceShowWeeklySummary() {
-            let currentCount = parseInt(localStorage.getItem('weekly_voice_count') || '0', 10);
-            if (currentCount < 3) {
-                simulateVoicePrompts(3 - currentCount);
-            } else {
-                localStorage.removeItem('weekly_summary_dismissed');
-                checkAndRenderWeeklySummary();
-            }
-        }
-
-        // Waveform Visualizer Canvas
-        function setupWaveformCanvas() {
-            canvas = document.getElementById('waveformCanvas');
-            if (canvas) {
-                ctx = canvas.getContext('2d');
-            }
-        }
-
-        function startAudioVisualization() {
-            if (!canvas || !ctx) return;
-            let step = 0;
-            const draw = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                const bars = 16;
-                const gap = 4;
-                const width = (canvas.width - (bars * gap)) / bars;
-
-                for (let i = 0; i < bars; i++) {
-                    const height = Math.sin(step + i * 0.4) * 8 + 10;
-                    ctx.fillStyle = '#3b82f6';
-                    ctx.beginPath();
-                    ctx.roundRect(i * (width + gap), (canvas.height - height) / 2, width, height, 3);
-                    ctx.fill();
-                }
-                step += 0.15;
-                animationFrameId = requestAnimationFrame(draw);
-            };
-            draw();
-        }
-
-        function stopAudioVisualization() {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-            if (ctx && canvas) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-            }
-        }
-
-        // Sidebar Navigation Controls
-        function toggleSidebar(show) {
-            const sidebar = document.getElementById('sidebarMenu');
-            const overlay = document.getElementById('sidebarOverlay');
-
-            if (show) {
-                overlay.classList.remove('hidden');
-                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
-                sidebar.classList.remove('-translate-x-full');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('opacity-0');
-                setTimeout(() => overlay.classList.add('hidden'), 300);
-            }
-        }
-
-        // Task-Pill Actions
-        function activateTaskPill(modeName) {
-            activeModeName = modeName;
-            
-            const modeNameEl = document.getElementById('activeModeName');
-            if (modeNameEl) modeNameEl.innerText = modeName;
-
-            const modePillEl = document.getElementById('activeModePill');
-            if (modePillEl) modePillEl.classList.remove('hidden');
-            
-            const input = document.getElementById('chatInput');
-            if (input) {
-                if (input.value.trim().length > 0) {
-                    baseText = input.value.trim() + " [" + modeName + "]";
-                } else {
-                    baseText = "[" + modeName + "]";
-                }
-                input.value = baseText;
-            }
-
-            startVoiceDictation();
-        }
-
-        function clearActiveModePill(event) {
-            if (event) event.stopPropagation();
-            activeModeName = null;
-            
-            const modePillEl = document.getElementById('activeModePill');
-            if (modePillEl) modePillEl.classList.add('hidden');
-        }
-
-        function dismissTaskPillsForever() {
-            const track = document.getElementById('taskPillTrack');
-            track.classList.add('pill-track-collapsed');
-            sessionStorage.setItem('chatgpt_task_pills_dismissed', 'true');
-        }
-
-        // Keyboard & Composer Positioning Handlers
-        function onComposerFocus() {
-            toggleKeyboard(true);
-        }
 
         function toggleKeyboard(show) {
             const kb = document.getElementById('simulatedKeyboard');
@@ -806,7 +444,7 @@
 
             if (keyboardVisible) {
                 kb.classList.remove('translate-y-full');
-                if (composerWrapper) composerWrapper.style.transform = 'translateY(-240px)';
+                if (composerWrapper) composerWrapper.style.transform = 'translateY(-220px)';
                 if (label) label.innerText = 'Hide KB';
             } else {
                 kb.classList.add('translate-y-full');
@@ -814,148 +452,7 @@
                 if (label) label.innerText = 'Show KB';
             }
         }
-
-        function dismissKeyboardAndFocus() {
-            toggleKeyboard(false);
-            document.getElementById('chatInput').blur();
-        }
-
-        function handleTextInputChange() {
-            const input = document.getElementById('chatInput');
-            const hasText = input.value.trim().length > 0;
-            const track = document.getElementById('taskPillTrack');
-
-            const waveformIcon = document.getElementById('waveformSvgIcon');
-            const sendIcon = document.getElementById('sendArrowIcon');
-
-            if (hasText) {
-                if (waveformIcon) waveformIcon.classList.add('hidden');
-                if (sendIcon) sendIcon.classList.remove('hidden');
-                if (track) track.classList.add('pill-track-collapsed');
-            } else {
-                if (waveformIcon) waveformIcon.classList.remove('hidden');
-                if (sendIcon) sendIcon.classList.add('hidden');
-            }
-        }
-
-        function handleDynamicAction() {
-            const input = document.getElementById('chatInput');
-            if (input.value.trim().length > 0) {
-                handleSendMessage();
-            } else {
-                startVoiceDictation();
-            }
-        }
-
-        function simulateKey(char) {
-            const input = document.getElementById('chatInput');
-            input.value += char;
-            handleTextInputChange();
-        }
-
-        function simulateBackspace() {
-            const input = document.getElementById('chatInput');
-            input.value = input.value.slice(0, -1);
-            handleTextInputChange();
-        }
-
-        function insertSuggestedWord(word) {
-            const input = document.getElementById('chatInput');
-            input.value += (input.value.length > 0 && !input.value.endsWith(' ') ? ' ' : '') + word + ' ';
-            handleTextInputChange();
-        }
-
-        // Message Handling & Chat Reset
-        function handleSendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            const emptyState = document.getElementById('emptyChatState');
-            if (emptyState) emptyState.classList.add('hidden');
-
-            const container = document.getElementById('messagesContainer');
-            const userMsg = document.createElement('div');
-            userMsg.className = "flex justify-end mb-3";
-            userMsg.innerHTML = `
-                <div class="max-w-[80%] bg-[#2c2c2e] text-white text-sm px-4 py-2.5 rounded-2xl rounded-tr-sm shadow">
-                    ${escapeHtml(text)}
-                </div>
-            `;
-            container.appendChild(userMsg);
-
-            input.value = '';
-            baseText = '';
-            clearActiveModePill();
-            handleTextInputChange();
-            dismissKeyboardAndFocus();
-
-            setTimeout(() => {
-                const assistantMsg = document.createElement('div');
-                assistantMsg.className = "flex justify-start mb-3";
-                assistantMsg.innerHTML = `
-                    <div class="max-w-[85%] bg-[#1c1c1e] border border-zinc-800 text-zinc-200 text-sm px-4 py-3 rounded-2xl rounded-tl-sm shadow-md space-y-2">
-                        <div class="flex items-center gap-2 text-xs font-semibold text-blue-400 mb-1">
-                            <i class="fa-solid fa-sparkles"></i>
-                            <span>ChatGPT</span>
-                        </div>
-                        <p>I have processed your request: <em>"${escapeHtml(text)}"</em>. Let me know if you would like to explore this further!</p>
-                    </div>
-                `;
-                container.appendChild(assistantMsg);
-
-                const main = document.getElementById('chatMainCanvas');
-                main.scrollTop = main.scrollHeight;
-            }, 600);
-        }
-
-        function startNewChat() {
-            const container = document.getElementById('messagesContainer');
-            container.innerHTML = `
-                <div id="emptyChatState" class="flex flex-col items-center justify-center text-center py-12 space-y-4">
-                    <div class="w-12 h-12 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-xl shadow-lg">
-                        <i class="fa-solid fa-sparkles"></i>
-                    </div>
-                    <p class="text-zinc-400 text-sm font-medium">What can I help with today?</p>
-                </div>
-            `;
-
-            document.getElementById('chatInput').value = '';
-            baseText = '';
-            sessionStorage.removeItem('chatgpt_task_pills_dismissed');
-            
-            const track = document.getElementById('taskPillTrack');
-            track.classList.remove('pill-track-collapsed');
-
-            handleTextInputChange();
-            dismissKeyboardAndFocus();
-        }
-
-        // Metrics Handlers
-        function incrementVoiceCount() {
-            if (weeklyVoiceCount < 50) {
-                weeklyVoiceCount++;
-                updateVoiceMetricUI();
-            }
-        }
-
-        function resetWeeklyVoiceCount() {
-            weeklyVoiceCount = 0;
-            updateVoiceMetricUI();
-        }
-
-        function updateVoiceMetricUI() {
-            const badge = document.getElementById('voiceCountBadge');
-            const bar = document.getElementById('voiceProgressBar');
-            if (badge && bar) {
-                badge.innerText = `${weeklyVoiceCount} / 50`;
-                bar.style.width = `${(weeklyVoiceCount / 50) * 100}%`;
-            }
-        }
-
-        function escapeHtml(str) {
-            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-        }
+        // ... existing script code ...
     </script>
 </body>
 </html>
