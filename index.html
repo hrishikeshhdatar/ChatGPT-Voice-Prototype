@@ -20,15 +20,17 @@
             user-select: none;
         }
 
-        /* Custom scrollbars */
+        /* Hide custom scrollbars */
         ::-webkit-scrollbar {
             display: none;
         }
 
         /* Task pill track height transition */
         .pill-track-container {
-            transition: opacity 150ms ease-in-out, max-height 150ms ease-in-out, margin 150ms ease-in-out;
-            max-height: 50px;
+            transition: opacity 200ms cubic-bezier(0.16, 1, 0.3, 1), 
+                        max-height 200ms cubic-bezier(0.16, 1, 0.3, 1), 
+                        margin 200ms cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 48px;
             opacity: 1;
             overflow: hidden;
         }
@@ -41,147 +43,126 @@
             pointer-events: none;
         }
 
-        /* Keyboard and composer drawers */
-        .keyboard-drawer {
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
+        /* Composer area drawer animations */
         .composer-area {
-            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Custom key styling to mimic iOS dark keyboard */
-        .ios-key {
-            background-color: #3a3a3c;
-            color: #ffffff;
-            border-radius: 7px;
-            font-size: 20px;
-            font-weight: 400;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.1s ease;
+        /* Sidebar drawer transition */
+        .sidebar-drawer {
+            transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .ios-key:active {
-            background-color: #636366 !important;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .ios-key-modifier {
-            background-color: #2c2c2e;
-        }
-
-        .ios-key-modifier:active {
-            background-color: #48484a !important;
+        .animate-fadeIn {
+            animation: fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
     </style>
 </head>
-<body class="bg-[#121212] text-white h-[100dvh] max-h-[100dvh] w-full flex flex-col items-center justify-center p-1 sm:p-3 overflow-hidden select-none">
+<body class="bg-[#0d0d0d] text-white h-[100dvh] w-full flex flex-col items-center justify-center p-0 sm:p-2 overflow-hidden select-none">
 
-    <!-- OpenAI Style Prototype Header Deck -->
-    <header class="w-full max-w-[375px] shrink-0 bg-[#0f0f11]/95 backdrop-blur-md text-zinc-300 text-xs px-2.5 py-1.5 flex items-center justify-between border border-zinc-800/80 rounded-t-2xl z-30 shadow-2xl">
-        <!-- Left: Brand Tag & Pulse Status -->
+    <header class="w-full max-w-[375px] shrink-0 bg-[#0f0f11]/90 backdrop-blur-md text-zinc-300 text-xs px-3 py-1.5 flex items-center justify-between border border-zinc-800/80 rounded-t-2xl z-30 shadow-2xl">
+        <!-- Left: Brand Tag -->
         <div class="flex items-center gap-1.5">
-            <div class="w-4 h-4 rounded bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-white text-[9px] shadow-inner">
-                <i class="fa-solid fa-sparkles text-[8px] text-zinc-300"></i>
+            <div class="w-4 h-4 rounded bg-zinc-800 border border-zinc-700 flex items-center justify-center text-white text-[8px]">
+                <i class="fa-solid fa-sparkles text-zinc-300"></i>
             </div>
             <div class="flex items-center gap-1">
-                <span class="font-semibold text-white tracking-tight text-[11.5px]">ChatGPT</span>
-                <span class="px-1 py-0.2 rounded text-[8px] font-mono tracking-wider font-semibold bg-zinc-800/90 text-zinc-400 border border-zinc-700/50 uppercase">Voice</span>
+                <span class="font-medium text-white tracking-tight text-xs">ChatGPT</span>
+                <span class="px-1.5 py-0.2 rounded text-[8px] font-mono bg-zinc-800 text-zinc-400 uppercase">iOS Voice</span>
             </div>
         </div>
 
-        <!-- Right: Segmented Design System Controls -->
-        <div class="flex items-center bg-zinc-950/80 p-0.5 rounded-full border border-zinc-800/80 shadow-inner">
-            <button onclick="forceShowWeeklySummary()" title="Trigger Weekly Summary Card" class="px-2 py-0.5 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
-                <i class="fa-solid fa-sparkles text-[9px] text-zinc-400"></i>
+        <!-- Right: Prototype Controls -->
+        <div class="flex items-center bg-zinc-950 p-0.5 rounded-full border border-zinc-800/80">
+            <button id="summaryTriggerBtn" onclick="forceShowWeeklySummary(event)" title="Weekly Summary Card" class="px-2 py-0.5 rounded-full hover:bg-zinc-800 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
+                <i class="fa-solid fa-chart-line text-[9px] text-blue-400"></i>
                 <span>Summary</span>
             </button>
             
             <div class="w-[1px] h-2.5 bg-zinc-800"></div>
 
-            <button onclick="toggleKeyboard()" title="Toggle Virtual Keyboard" class="px-2 py-0.5 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
+            <button onclick="toggleKeyboard()" title="Toggle Virtual Keyboard" class="px-2 py-0.5 rounded-full hover:bg-zinc-800 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
                 <i class="fa-regular fa-keyboard text-[10px] text-zinc-400"></i>
                 <span id="kbToggleLabel">Show KB</span>
             </button>
 
-            <button onclick="startNewChat()" title="Start New Session" class="ml-0.5 px-2 py-0.5 bg-white hover:bg-zinc-200 active:scale-95 text-black rounded-full text-[10px] font-semibold transition-all shadow-sm flex items-center gap-0.5">
+            <button onclick="startNewChat()" title="Start New Session" class="ml-0.5 px-2 py-0.5 bg-white hover:bg-zinc-200 active:scale-95 text-black rounded-full text-[10px] font-semibold transition-all flex items-center gap-0.5">
                 <i class="fa-solid fa-plus text-[8px]"></i>
                 <span>New</span>
             </button>
         </div>
     </header>
 
-    <!-- Main Mobile Device Screen Container -->
-    <div class="w-full max-w-[375px] flex-1 h-full max-h-[calc(100dvh-3rem)] sm:max-h-[620px] bg-black rounded-b-2xl sm:rounded-b-3xl shadow-2xl flex flex-col relative overflow-hidden border-x border-b border-zinc-900">
+    <div class="w-full max-w-[375px] flex-1 h-full max-h-[calc(100dvh-2.8rem)] sm:max-h-[620px] bg-black rounded-b-2xl sm:rounded-b-3xl shadow-2xl flex flex-col relative overflow-hidden border-x border-b border-zinc-900">
 
-        <div class="w-full h-8 px-4 pt-1 flex items-center justify-between text-white text-xs font-semibold select-none bg-black z-30 relative shrink-0">
-            <!-- Left: Time + Silent Bell Icon -->
-            <div class="flex items-center gap-1.5">
-                <span class="text-[11px] font-semibold tracking-tight text-white">11:44</span>
-                <i class="fa-solid fa-bell-slash text-[9px] text-white"></i>
+        <!-- Sidebar Menu Drawer -->
+        <div id="sidebarDrawer" class="sidebar-drawer absolute inset-y-0 left-0 w-64 bg-[#171717] z-50 transform -translate-x-full transition-transform duration-300 shadow-2xl flex flex-col p-4 border-r border-zinc-800">
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800">
+                <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-zinc-800 flex items-center justify-center text-white text-xs">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold text-white">ChatGPT User</p>
+                        <p class="text-[10px] text-zinc-400">Free Plan</p>
+                    </div>
+                </div>
+                <button onclick="toggleSidebar(false)" class="text-zinc-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
             </div>
-            <div class="flex items-center gap-1">
-                <span class="font-semibold text-white tracking-tight text-[11.5px]">ChatGPT</span>
-                <span class="px-1 py-0.2 rounded text-[8px] font-mono tracking-wider font-semibold bg-zinc-800/90 text-zinc-400 border border-zinc-700/50 uppercase">Voice</span>
+
+            <div class="flex-1 overflow-y-auto py-3 space-y-2">
+                <button onclick="startNewChat(); toggleSidebar(false);" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl bg-zinc-800/60 hover:bg-zinc-800 text-xs font-medium text-white transition-colors">
+                    <i class="fa-solid fa-plus text-xs"></i>
+                    <span>New Chat</span>
+                </button>
+                <div class="pt-2">
+                    <p class="text-[10px] font-semibold uppercase tracking-wider text-zinc-500 px-3 mb-1">Recent Chats</p>
+                    <div class="px-3 py-1.5 rounded-lg text-xs text-zinc-300 hover:bg-zinc-800/40 cursor-pointer truncate">Voice feature prototype session</div>
+                    <div class="px-3 py-1.5 rounded-lg text-xs text-zinc-400 hover:bg-zinc-800/40 cursor-pointer truncate">Productivity tasks summary</div>
+                </div>
+            </div>
+
+            <div class="pt-3 border-t border-zinc-800">
+                <button onclick="openSettingsModal(); toggleSidebar(false);" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl hover:bg-zinc-800/50 text-xs text-zinc-300 transition-colors">
+                    <i class="fa-solid fa-gear text-xs text-zinc-400"></i>
+                    <span>Settings & Voice Stats</span>
+                </button>
             </div>
         </div>
 
-        <!-- Right: Segmented Design System Controls -->
-        <div class="flex items-center bg-zinc-950/80 p-0.5 rounded-full border border-zinc-800/80 shadow-inner">
-            <button onclick="forceShowWeeklySummary()" title="Trigger Weekly Summary Card" class="px-2 py-0.5 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
-                <i class="fa-solid fa-sparkles text-[9px] text-zinc-400"></i>
-                <span>Summary</span>
-            </button>
-            
-            <div class="w-[1px] h-2.5 bg-zinc-800"></div>
+        <!-- Sidebar Backdrop Overlay -->
+        <div id="sidebarOverlay" onclick="toggleSidebar(false)" class="absolute inset-0 bg-black/60 z-40 hidden transition-opacity"></div>
 
-            <button onclick="toggleKeyboard()" title="Toggle Virtual Keyboard" class="px-2 py-0.5 rounded-full hover:bg-zinc-800/80 active:scale-95 text-zinc-300 hover:text-white text-[10px] font-medium transition-all flex items-center gap-1">
-                <i class="fa-regular fa-keyboard text-[10px] text-zinc-400"></i>
-                <span id="kbToggleLabel">Show KB</span>
-            </button>
-
-            <button onclick="startNewChat()" title="Start New Session" class="ml-0.5 px-2 py-0.5 bg-white hover:bg-zinc-200 active:scale-95 text-black rounded-full text-[10px] font-semibold transition-all shadow-sm flex items-center gap-0.5">
-                <i class="fa-solid fa-plus text-[8px]"></i>
-                <span>New</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Main Mobile Device Screen Container -->
-    <div class="w-full max-w-[375px] h-[680px] max-h-[82vh] bg-black sm:rounded-b-3xl shadow-2xl flex flex-col relative overflow-hidden border-x border-b border-zinc-900">
-
-        <div class="w-full h-9 px-5 pt-1.5 flex items-center justify-between text-white text-xs font-semibold select-none bg-black z-30 relative shrink-0">
-            <!-- Left: Time + Silent Bell Icon -->
+        <div class="w-full h-8 px-5 pt-1.5 flex items-center justify-between text-white text-xs font-semibold select-none bg-black z-30 relative shrink-0">
             <div class="flex items-center gap-1.5">
-                <span class="text-xs font-semibold tracking-tight text-white">5:48</span>
-                <i class="fa-solid fa-bell-slash text-[10px] text-white"></i>
+                <span class="text-xs font-semibold tracking-tight text-white" id="iosClock">9:41</span>
+                <i class="fa-solid fa-bell-slash text-[9px] text-zinc-400"></i>
             </div>
 
-            <!-- Center: Orange Mic Privacy Dot -->
-            <div id="iosMicOrangeDot" class="w-1.5 h-1.5 rounded-full bg-orange-500 opacity-0 transition-opacity duration-200"></div>
+            <!-- Orange Mic Privacy Indicator Dot -->
+            <div id="iosMicOrangeDot" class="w-2 h-2 rounded-full bg-orange-500 opacity-0 transition-opacity duration-200"></div>
 
-            <!-- Right: Cellular, Wi-Fi & Battery Capsule -->
+            <!-- Status Icons -->
             <div class="flex items-center gap-1.5 text-xs">
                 <span class="text-[10px] font-bold text-white tracking-wider">5G</span>
-                <div class="flex items-end gap-[1.5px] h-[9px]">
-                    <span class="w-[2.5px] h-[3px] bg-white rounded-[0.5px]"></span>
-                    <span class="w-[2.5px] h-[5px] bg-white rounded-[0.5px]"></span>
-                    <span class="w-[2.5px] h-[7px] bg-white rounded-[0.5px]"></span>
-                    <span class="w-[2.5px] h-[9px] bg-white rounded-[0.5px]"></span>
-                </div>
                 <i class="fa-solid fa-wifi text-[10px] text-white"></i>
-                <div class="relative w-[22px] h-[11px] bg-white rounded-[3.5px] flex items-center justify-center shadow-sm">
-                    <div class="absolute -right-[2.5px] top-[3px] w-[1.5px] h-[4px] bg-white rounded-r-[1px]"></div>
-                    <span class="text-[8.5px] font-black tracking-tighter leading-none text-black select-none">76</span>
+                <div class="relative w-[20px] h-[10px] border border-white/80 rounded-[3px] flex items-center p-[1px]">
+                    <div class="h-full w-[80%] bg-white rounded-[1px]"></div>
                 </div>
             </div>
         </div>
 
-        <header class="w-full h-11 px-3.5 flex items-center justify-between bg-black z-20 shrink-0">
-            <!-- Left: Sidebar Toggle Button -->
-            <button onclick="toggleSidebar(true)" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 flex items-center justify-center transition-all">
+        <!-- App Top Navigation Bar -->
+        <header class="w-full h-10 px-3.5 flex items-center justify-between bg-black z-20 shrink-0 border-b border-zinc-900/50">
+            <!-- Sidebar Toggle Button -->
+            <button id="sidebarToggleButton" onclick="toggleSidebar(true)" title="Open Sidebar Menu" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-90 flex items-center justify-center transition-all cursor-pointer">
                 <div class="flex flex-col gap-[3px] w-3.5 items-center">
                     <div class="w-full h-[1.5px] bg-white rounded-full"></div>
                     <div class="w-full h-[1.5px] bg-white rounded-full"></div>
@@ -189,68 +170,70 @@
             </button>
 
             <!-- Center: Upgrade Pill Button -->
-            <button class="px-3 py-1 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 border border-zinc-800 text-[11px] font-semibold text-blue-400 flex items-center gap-1 transition-all shadow-sm">
-                <i class="fa-solid fa-diamond text-[9px] text-blue-400"></i>
-                <span>Upgrade</span>
+            <button class="px-3 py-1 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 border border-zinc-800 text-[11px] font-semibold text-blue-400 flex items-center gap-1.5 transition-all shadow-sm">
+                <i class="fa-solid fa-gem text-[9px] text-blue-400"></i>
+                <span>ChatGPT Plus</span>
             </button>
 
-            <!-- Right: New Chat Icon Button -->
-            <button onclick="startNewChat()" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-95 flex items-center justify-center transition-all">
-                <i class="fa-regular fa-comment-dots text-white text-sm"></i>
+            <!-- New Chat Icon Button -->
+            <button id="topNewChatButton" onclick="startNewChat()" title="Start New Chat" class="w-8 h-8 rounded-full bg-[#1c1c1e] hover:bg-[#2c2c2e] active:scale-90 flex items-center justify-center transition-all cursor-pointer">
+                <i class="fa-regular fa-pen-to-square text-white text-xs"></i>
             </button>
         </header>
 
-        <main id="chatMainCanvas" onclick="dismissKeyboardAndFocus()" class="flex-1 bg-black px-3.5 py-2 flex flex-col justify-end relative overflow-y-auto">
-            
-            <!-- Messages Container -->
-            <div id="messagesContainer" class="w-full space-y-3 my-auto flex flex-col justify-center min-h-[220px]">
+        <main id="chatMainCanvas" class="flex-1 bg-black px-3.5 py-2 flex flex-col relative overflow-y-auto">
+            <div id="messagesContainer" class="w-full space-y-3 my-auto flex flex-col justify-end min-h-[180px]">
                 
                 <!-- Initial Empty Chat Canvas Graphic -->
-                <div id="emptyChatState" class="flex flex-col items-center justify-center text-center py-8 space-y-3">
-                    <div class="w-10 h-10 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-lg shadow-lg">
-                        <i class="fa-solid fa-sparkles"></i>
+                <div id="emptyChatState" class="flex flex-col items-center justify-center text-center py-6 space-y-2.5">
+                    <div class="w-11 h-11 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-lg shadow-lg">
+                        <i class="fa-solid fa-sparkles text-blue-400"></i>
                     </div>
-                    <p class="text-zinc-400 text-xs font-medium">What can I help with today?</p>
+                    <h3 class="text-white font-medium text-sm">What can I help with today?</h3>
+                    <p class="text-zinc-500 text-[11px] max-w-[220px]">Tap a task pill below or tap the microphone to dictate your prompt.</p>
                 </div>
 
-                <!-- Chat history dynamically appended here -->
             </div>
         </main>
 
-        <div id="composerAreaWrapper" class="composer-area w-full px-3 pt-1 pb-2 bg-black z-20 shrink-0 relative">
+        <div id="composerAreaWrapper" class="composer-area w-full px-3 pt-1 pb-2.5 bg-black z-20 shrink-0 relative border-t border-zinc-900/30">
 
-            <!-- Integrated Task-Pill Row -->
-            <div id="taskPillTrack" class="pill-track-container w-full mb-1.5">
+            <!-- Unified OpenAI Task-Pill Track -->
+            <div id="taskPillTrack" class="pill-track-container w-full mb-2">
                 <div class="flex items-center gap-1.5 overflow-x-auto pb-1 px-0.5 scrollbar-none">
-                    <button onclick="activateTaskPill('Quick Lookup')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
-                        <span>Quick Lookup</span>
+                    <button onclick="activateTaskPill('Quick Lookup')" class="py-1.5 px-3.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] active:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0 flex items-center gap-1.5">
+                        <span>🔍 Quick Lookup</span>
                     </button>
-                    <button onclick="activateTaskPill('Brainstorm')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
-                        <span>Brainstorm</span>
+                    <button onclick="activateTaskPill('Brainstorm')" class="py-1.5 px-3.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] active:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0 flex items-center gap-1.5">
+                        <span>💡 Brainstorm</span>
                     </button>
-                    <button onclick="activateTaskPill('Summarize')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
-                        <span>Summarize</span>
+                    <button onclick="activateTaskPill('Summarize')" class="py-1.5 px-3.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] active:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0 flex items-center gap-1.5">
+                        <span>📝 Summarize</span>
                     </button>
-                    <button onclick="activateTaskPill('Draft Email')" class="px-3.5 py-1.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] hover:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0">
-                        <span>Draft Email</span>
+                    <button onclick="activateTaskPill('Draft Email')" class="py-1.5 px-3.5 rounded-full bg-[#212121] hover:bg-[#2f2f2f] active:bg-[#2f2f2f] border border-[#303030] active:border-[#424242] text-[#ececec] text-[12px] font-normal whitespace-nowrap transition-all shrink-0 flex items-center gap-1.5">
+                        <span>✉️ Draft Email</span>
                     </button>
-                    <button onclick="dismissTaskPillsForever()" title="Dismiss for session" class="w-7 h-7 rounded-full bg-[#212121] hover:bg-[#2f2f2f] border border-[#303030] text-[#737373] hover:text-[#ececec] flex items-center justify-center shrink-0 transition-colors">
-                        <i class="fa-solid fa-xmark text-[11px]"></i>
+                    <button onclick="dismissTaskPillsForever()" title="Dismiss pills" class="w-7 h-7 rounded-full bg-[#212121] hover:bg-[#2f2f2f] border border-[#303030] text-zinc-400 hover:text-[#ececec] flex items-center justify-center shrink-0 transition-colors">
+                        <i class="fa-solid fa-xmark text-[10px]"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Main Composer Bar -->
-            <div id="composerBox" class="w-full bg-[#1c1c1e] border border-zinc-800/80 rounded-full px-2.5 py-1 flex items-center justify-between shadow-xl transition-all">
+            <div id="composerBox" class="w-full bg-[#1c1c1e] border border-zinc-800/80 rounded-full px-2 py-1 flex items-center justify-between shadow-xl transition-all min-h-[44px]">
                 
-                <!-- State 1: Idle / Typing Composer View -->
-                <div id="idleComposerView" class="w-full flex items-center gap-1.5">
-                    <!-- Attachment Plus Button -->
-                    <button class="w-7 h-7 rounded-full bg-transparent hover:bg-zinc-800 active:scale-95 text-zinc-200 flex items-center justify-center shrink-0 transition-all">
+                <!-- State 1: Standard Idle View -->
+                <div id="idleComposerView" class="w-full flex items-center gap-2">
+                    <button class="w-7 h-7 rounded-full bg-transparent hover:bg-zinc-800 active:scale-90 text-white flex items-center justify-center shrink-0 transition-all">
                         <i class="fa-solid fa-plus text-base"></i>
                     </button>
 
-                    <!-- Text Input Box -->
+                    <div id="activeModePill" class="hidden flex items-center gap-1 px-2.5 py-0.5 bg-zinc-800 border border-zinc-700 text-[11px] text-zinc-200 rounded-full font-medium shrink-0">
+                        <span id="activeModeName">Brainstorm</span>
+                        <button onclick="clearActiveModePill(event)" class="text-zinc-400 hover:text-white transition-colors">
+                            <i class="fa-solid fa-xmark text-[9px]"></i>
+                        </button>
+                    </div>
+
                     <div class="flex-1 flex items-center relative">
                         <input id="chatInput" type="text" placeholder="Ask ChatGPT" 
                                onfocus="onComposerFocus()" 
@@ -259,236 +242,836 @@
                                class="w-full bg-transparent text-[14px] text-white placeholder-zinc-500 focus:outline-none px-1 py-0.5">
                     </div>
 
-                    <!-- Right Actions Group -->
                     <div class="flex items-center gap-1.5 shrink-0">
-                        <!-- Dictation Mic Button -->
-                        <button onclick="startVoiceDictation()" title="Dictate" class="w-7 h-7 rounded-full hover:bg-zinc-800 active:scale-95 text-zinc-300 flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-microphone text-base"></i>
+                        <!-- Mic Button -->
+                        <button id="micButton" onclick="startVoiceDictation()" title="Voice Dictation" class="w-7 h-7 rounded-full bg-transparent hover:bg-zinc-800 active:scale-90 text-white flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-microphone text-sm"></i>
                         </button>
 
-                        <!-- Dynamic Action Button: Blue Waveform icon when empty vs Send Arrow when typing -->
-                        <button id="dynamicActionButton" onclick="handleDynamicAction()" class="w-7 h-7 rounded-full bg-[#007AFF] hover:bg-blue-500 active:scale-95 text-white flex items-center justify-center transition-all shadow-md shrink-0">
-                            <span id="dynamicActionIconContainer" class="flex items-center justify-center">
-                                <svg id="waveformSvgIcon" class="w-3.5 h-3.5 text-white fill-current" viewBox="0 0 24 24">
-                                    <rect x="2.5" y="8" width="2.2" height="8" rx="1.1" />
-                                    <rect x="7" y="4" width="2.2" height="16" rx="1.1" />
-                                    <rect x="11.5" y="2" width="2.2" height="20" rx="1.1" />
-                                    <rect x="16" y="6" width="2.2" height="12" rx="1.1" />
-                                    <rect x="20.5" y="9" width="2.2" height="6" rx="1.1" />
-                                </svg>
-                                <i id="sendArrowIcon" class="fa-solid fa-arrow-up text-xs text-white hidden"></i>
-                            </span>
+                        <!-- Blue Waveform Action Button -->
+                        <button id="waveformSubmitBtn" onclick="handleDynamicAction()" title="Start Voice Dictation" class="w-8 h-8 rounded-full bg-[#007AFF] hover:bg-blue-600 active:scale-95 text-white flex items-center justify-center transition-all shadow-md">
+                            <i id="waveformSvgIcon" class="fa-solid fa-bars-staggered text-xs"></i>
+                            <i id="sendArrowIcon" class="fa-solid fa-arrow-up text-xs hidden"></i>
                         </button>
                     </div>
                 </div>
 
                 <!-- State 2: Active Voice Recording View -->
-                <div id="recordingComposerView" class="hidden w-full flex items-center justify-between gap-1.5 py-0.5 px-0.5">
-                    <!-- Cancel Dictation Button -->
-                    <button onclick="cancelVoiceDictation()" title="Cancel" class="w-7 h-7 rounded-full bg-[#2c2c2e] hover:bg-zinc-700 active:scale-95 text-zinc-300 flex items-center justify-center transition-all shrink-0">
-                        <i class="fa-solid fa-xmark text-xs"></i>
+                <div id="recordingComposerView" class="w-full hidden flex items-center justify-between gap-3 px-1 py-0.5">
+                    <!-- Cancel Button (Left X) -->
+                    <button onclick="cancelVoiceDictation()" title="Cancel Dictation" class="w-9 h-9 rounded-full bg-[#2c2c2e] hover:bg-[#3a3a3c] active:scale-90 text-white flex items-center justify-center transition-all shrink-0">
+                        <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
 
-                    <!-- Waveform Canvas & Active Mode Tag -->
-                    <div class="flex-1 flex items-center justify-center gap-1.5 overflow-hidden px-1">
-                        <div id="activeModePill" class="hidden flex items-center gap-1 px-2 py-0.5 bg-zinc-800/90 border border-blue-500/30 text-[11px] text-blue-400 rounded-full font-medium shrink-0">
-                            <span id="activeModeName"></span>
-                            <button onclick="clearActiveModePill(event)" class="text-zinc-400 hover:text-white transition-colors">
-                                <i class="fa-solid fa-xmark text-[9px]"></i>
-                            </button>
-                        </div>
-                        <canvas id="waveformCanvas" width="130" height="20" class="h-5 max-w-[130px]"></canvas>
+                    <!-- Waveform Animation Canvas -->
+                    <div class="flex-1 flex items-center justify-center relative px-2 h-9 overflow-hidden">
+                        <canvas id="waveformCanvas" class="w-full h-8 max-w-[220px]"></canvas>
                     </div>
 
-                    <!-- Right Controls: Stop & Send -->
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button onclick="stopVoiceDictation()" title="Stop" class="w-7 h-7 rounded-full bg-[#2c2c2e] hover:bg-zinc-700 active:scale-95 text-zinc-300 flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-stop text-[10px]"></i>
+                    <!-- Action Buttons Right (Stop & Send) -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <!-- Stop Square Button -->
+                        <button onclick="stopVoiceDictation()" title="Stop Recording" class="w-9 h-9 rounded-full bg-[#2c2c2e] hover:bg-[#3a3a3c] active:scale-90 text-white flex items-center justify-center transition-all">
+                            <div class="w-3.5 h-3.5 bg-white rounded-[2px]"></div>
                         </button>
-                        <button onclick="stopAndSendVoice()" title="Done & Send" class="w-7 h-7 rounded-full bg-[#007AFF] hover:bg-blue-500 active:scale-95 text-white flex items-center justify-center transition-all shadow-md">
-                            <i class="fa-solid fa-arrow-up text-xs"></i>
+
+                        <!-- Send Arrow Button -->
+                        <button onclick="stopAndSendVoice()" title="Submit Voice Input" class="w-9 h-9 rounded-full bg-[#007AFF] hover:bg-blue-600 active:scale-90 text-white flex items-center justify-center transition-all shadow-md">
+                            <i class="fa-solid fa-arrow-up text-base"></i>
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <!-- Simulated iOS Keyboard Drawer -->
-        <div id="simulatedKeyboard" class="keyboard-drawer absolute bottom-0 left-0 right-0 h-[220px] bg-[#1c1c1e] border-t border-zinc-800/80 transform translate-y-full z-30 pb-2 select-none">
-            <!-- Virtual iOS Keyboard Keys Layout -->
-            <div class="p-1 space-y-1.5 max-w-sm mx-auto pt-2">
-                <!-- Row 1: q w e r t y u i o p -->
-                <div class="flex justify-center gap-[4px]">
-                    <button onclick="simulateKey('q')" class="ios-key flex-1 h-9">q</button>
-                    <button onclick="simulateKey('w')" class="ios-key flex-1 h-9">w</button>
-                    <button onclick="simulateKey('e')" class="ios-key flex-1 h-9">e</button>
-                    <button onclick="simulateKey('r')" class="ios-key flex-1 h-9">r</button>
-                    <button onclick="simulateKey('t')" class="ios-key flex-1 h-9">t</button>
-                    <button onclick="simulateKey('y')" class="ios-key flex-1 h-9">y</button>
-                    <button onclick="simulateKey('u')" class="ios-key flex-1 h-9">u</button>
-                    <button onclick="simulateKey('i')" class="ios-key flex-1 h-9">i</button>
-                    <button onclick="simulateKey('o')" class="ios-key flex-1 h-9">o</button>
-                    <button onclick="simulateKey('p')" class="ios-key flex-1 h-9">p</button>
-                </div>
-
-                <!-- Row 2: a s d f g h j k l -->
-                <div class="flex justify-center gap-[4px] px-2.5">
-                    <button onclick="simulateKey('a')" class="ios-key flex-1 h-9">a</button>
-                    <button onclick="simulateKey('s')" class="ios-key flex-1 h-9">s</button>
-                    <button onclick="simulateKey('d')" class="ios-key flex-1 h-9">d</button>
-                    <button onclick="simulateKey('f')" class="ios-key flex-1 h-9">f</button>
-                    <button onclick="simulateKey('g')" class="ios-key flex-1 h-9">g</button>
-                    <button onclick="simulateKey('h')" class="ios-key flex-1 h-9">h</button>
-                    <button onclick="simulateKey('j')" class="ios-key flex-1 h-9">j</button>
-                    <button onclick="simulateKey('k')" class="ios-key flex-1 h-9">k</button>
-                    <button onclick="simulateKey('l')" class="ios-key flex-1 h-9">l</button>
-                </div>
-
-                <!-- Row 3: Shift, z x c v b n m, Delete -->
-                <div class="flex justify-center gap-[4px]">
-                    <button class="ios-key ios-key-modifier w-9 h-9"><i class="fa-solid fa-arrow-up text-xs"></i></button>
-                    <button onclick="simulateKey('z')" class="ios-key flex-1 h-9">z</button>
-                    <button onclick="simulateKey('x')" class="ios-key flex-1 h-9">x</button>
-                    <button onclick="simulateKey('c')" class="ios-key flex-1 h-9">c</button>
-                    <button onclick="simulateKey('v')" class="ios-key flex-1 h-9">v</button>
-                    <button onclick="simulateKey('b')" class="ios-key flex-1 h-9">b</button>
-                    <button onclick="simulateKey('n')" class="ios-key flex-1 h-9">n</button>
-                    <button onclick="simulateKey('m')" class="ios-key flex-1 h-9">m</button>
-                    <button onclick="simulateBackspace()" class="ios-key ios-key-modifier w-9 h-9"><i class="fa-solid fa-delete-left text-xs"></i></button>
-                </div>
-
-                <!-- Row 4: 123, Spacebar, Return key -->
-                <div class="flex justify-center gap-[5px] pt-0.5">
-                    <button class="ios-key ios-key-modifier w-16 h-9 text-xs font-medium">123</button>
-                    <button onclick="simulateKey(' ')" class="ios-key flex-1 h-9 text-xs">space</button>
-                    <button onclick="handleSendMessage()" class="ios-key ios-key-modifier w-16 h-9 text-xs"><i class="fa-solid fa-arrow-turn-down transform rotate-90 text-xs"></i></button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Sidebar Overlay & Sliding Sidebar Drawer -->
-        <div id="sidebarOverlay" class="absolute inset-0 bg-black/70 z-40 hidden transition-opacity opacity-0" onclick="toggleSidebar(false)"></div>
-        
-        <aside id="sidebarMenu" class="absolute top-0 left-0 bottom-0 w-[300px] bg-black z-50 transform -translate-x-full transition-transform duration-300 ease-in-out border-r border-zinc-900 px-4 py-6 flex flex-col justify-between overflow-y-auto">
-            <div class="space-y-6 pt-4">
-                <!-- Sidebar Top Header -->
-                <div class="flex items-center justify-between px-1">
-                    <h2 class="text-white text-xl font-bold tracking-tight">ChatGPT</h2>
-                    <button class="w-9 h-9 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 flex items-center justify-center transition-colors">
-                        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+                <!-- State 3: Transcribing State View -->
+                <div id="transcribingComposerView" class="w-full hidden flex items-center justify-between gap-3 px-1 py-0.5">
+                    <!-- Cancel Button (Left X) -->
+                    <button onclick="cancelVoiceDictation()" title="Cancel Transcribing" class="w-9 h-9 rounded-full bg-[#2c2c2e] hover:bg-[#3a3a3c] active:scale-90 text-white flex items-center justify-center transition-all shrink-0">
+                        <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
-                </div>
 
-                <!-- Navigation List Items -->
-                <nav class="space-y-1">
-                    <a href="#" onclick="toggleSidebar(false)" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-zinc-900 text-zinc-200 transition-colors text-sm font-medium">
-                        <i class="fa-regular fa-image text-zinc-400 w-5 text-center"></i>
-                        <span>Images</span>
-                    </a>
-                    <a href="#" onclick="toggleSidebar(false)" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-zinc-900 text-zinc-200 transition-colors text-sm font-medium">
-                        <i class="fa-solid fa-book-bookmark text-zinc-400 w-5 text-center"></i>
-                        <span>Library</span>
-                    </a>
-                    <a href="#" onclick="toggleSidebar(false)" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-zinc-900 text-zinc-200 transition-colors text-sm font-medium">
-                        <i class="fa-regular fa-folder text-zinc-400 w-5 text-center"></i>
-                        <span>Projects</span>
-                    </a>
-                    <a href="#" onclick="toggleSidebar(false)" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-zinc-900 text-zinc-200 transition-colors text-sm font-medium">
-                        <i class="fa-regular fa-clock text-zinc-400 w-5 text-center"></i>
-                        <span>Scheduled</span>
-                    </a>
-                    <a href="#" onclick="toggleSidebar(false)" class="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-zinc-900 text-zinc-200 transition-colors text-sm font-medium">
-                        <i class="fa-solid fa-border-all text-zinc-400 w-5 text-center"></i>
-                        <span>Explore</span>
-                    </a>
-                </nav>
+                    <!-- Center Transcribing Text -->
+                    <div class="flex-1 flex items-center justify-center">
+                        <span class="text-[#8e8e93] text-[15px] font-normal tracking-tight">Transcribing</span>
+                    </div>
 
-                <!-- Recents Header -->
-                <div class="pt-2">
-                    <h3 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider px-3">Recents</h3>
-                    <div class="py-2 px-3 text-xs text-zinc-600">
-                        <!-- Intentionally empty -->
+                    <!-- Action Buttons Right (Spinner & Send) -->
+                    <div class="flex items-center gap-2 shrink-0">
+                        <!-- Spinning Loader Circle -->
+                        <div class="w-9 h-9 rounded-full bg-[#2c2c2e] flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-circle-notch fa-spin text-zinc-400 text-sm"></i>
+                        </div>
+
+                        <!-- Send Arrow Button -->
+                        <button onclick="stopAndSendVoice()" title="Submit Voice Input" class="w-9 h-9 rounded-full bg-[#007AFF] hover:bg-blue-600 active:scale-90 text-white flex items-center justify-center transition-all shadow-md">
+                            <i class="fa-solid fa-arrow-up text-base"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Bottom Floating Actions Bar -->
-            <div class="pt-4 border-t border-zinc-900 flex items-center justify-between px-2">
-                <button onclick="startNewChat(); toggleSidebar(false);" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-semibold text-sm flex items-center gap-2 shadow-lg transition-all">
-                    <i class="fa-regular fa-pen-to-square text-sm"></i>
-                    <span>Chat</span>
-                </button>
-
-                <button onclick="openSettingsModal()" class="w-10 h-10 rounded-full bg-[#1c1c1e] hover:bg-zinc-800 text-zinc-300 flex items-center justify-center transition-colors" title="Settings">
-                    <i class="fa-solid fa-gear text-base"></i>
-                </button>
-            </div>
-        </aside>
-
-        <!-- Secondary Stats Route: Settings -> Voice & Audio Modal -->
-        <div id="settingsModal" class="absolute inset-0 bg-black/80 z-50 hidden flex flex-col justify-end sm:justify-center p-4 backdrop-blur-sm transition-opacity">
-            <div class="bg-[#1c1c1e] border border-zinc-800 rounded-3xl p-5 space-y-4 max-w-sm mx-auto w-full shadow-2xl text-white">
-                <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-gear text-blue-400"></i>
-                        <h3 class="font-bold text-base">Settings</h3>
-                    </div>
-                    <button onclick="closeSettingsModal()" class="w-8 h-8 rounded-full bg-zinc-800 text-zinc-400 hover:text-white flex items-center justify-center transition-colors">
-                        <i class="fa-solid fa-xmark text-sm"></i>
-                    </button>
-                </div>
-                <div>
-                    <h4 class="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2">Voice & Audio</h4>
-                    <div class="bg-[#2c2c2e] rounded-2xl p-4 space-y-3 border border-zinc-800">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-zinc-400">Prompts Dictated</span>
-                            <span id="settingsPromptCount" class="font-bold text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-zinc-400">Words Transcribed</span>
-                            <span id="settingsWordCount" class="font-bold text-white">0</span>
-                        </div>
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="text-zinc-400">Time Saved (38 WPM)</span>
-                            <span id="settingsTimeSaved" class="font-bold text-emerald-400">0s</span>
-                        </div>
-                        <div class="pt-2 border-t border-zinc-700/50 flex justify-between items-center">
-                            <button onclick="resetVoiceStats()" class="text-xs text-red-400 hover:text-red-300 transition-colors font-medium">Reset Stats</button>
-                            <button onclick="simulateVoicePrompts(3)" class="text-xs text-blue-400 hover:underline transition-colors font-medium">+3 Test Prompts</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
     </div>
 
+    <div id="settingsModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-[#1c1c1e] border border-zinc-800 rounded-2xl p-5 max-w-xs w-full space-y-4 text-white shadow-2xl">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                <h3 class="text-sm font-semibold flex items-center gap-2">
+                    <i class="fa-solid fa-sliders text-blue-400"></i>
+                    <span>Voice Prototype Settings</span>
+                </h3>
+                <button onclick="closeSettingsModal()" class="text-zinc-400 hover:text-white p-1">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <div class="space-y-2 text-xs">
+                <p class="text-zinc-400 font-medium">38 WPM Time-Saved Metrics</p>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-xl p-3 space-y-1.5">
+                    <div class="flex justify-between">
+                        <span class="text-zinc-400">Voice Prompts:</span>
+                        <span id="settingsPromptCount" class="font-bold text-white">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-400">Words Dictated:</span>
+                        <span id="settingsWordCount" class="font-bold text-white">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-zinc-400">Est. Time Saved:</span>
+                        <span id="settingsTimeSaved" class="font-bold text-emerald-400">0s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2 flex flex-col gap-2">
+                <button onclick="resetVoiceStats()" class="w-full py-1.5 bg-zinc-800 hover:bg-zinc-700 active:scale-95 rounded-xl text-xs text-red-400 font-medium transition-all">
+                    Reset Voice Statistics
+                </button>
+                <button onclick="closeSettingsModal()" class="w-full py-2 bg-white hover:bg-zinc-200 active:scale-95 rounded-xl text-xs text-black font-semibold transition-all">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // ... existing variables ...
-        let keyboardVisible = false;
+        /* -------------------------------------------------------------
+         * Global Application State Variables
+         * ------------------------------------------------------------- */
+        let activeMode = null;
+        let liveTranscribedText = '';
+        let isRecording = false;
+        let isKeyboardOpen = false;
+        let pillsDismissedForever = false;
+
+        let mediaStream = null;
+        let speechRecognition = null;
+        let audioContext = null;
+        let analyserNode = null;
+        let animFrameId = null;
+        let animationFrameId = null;
+        let dictationStartTime = Date.now();
+        let simulatedSpeechTimer = null;
+        let isSimulatedVoice = false;
+        let transcribingTimeout = null;
+
+        function activateTaskPill(modeName) {
+            activeMode = modeName;
+            const modePill = document.getElementById('activeModePill');
+            const modeLabel = document.getElementById('activeModeName');
+
+            if (modePill && modeLabel) {
+                modeLabel.innerText = modeName;
+                modePill.classList.remove('hidden');
+            }
+
+            // Instantly start voice dictation in selected task mode
+            startVoiceDictation();
+        }
+
+        function clearActiveModePill(event) {
+            if (event) event.stopPropagation();
+            activeMode = null;
+            const modePill = document.getElementById('activeModePill');
+            if (modePill) modePill.classList.add('hidden');
+        }
+
+        function dismissTaskPillsForever() {
+            pillsDismissedForever = true;
+            const track = document.getElementById('taskPillTrack');
+            if (track) track.classList.add('pill-track-collapsed');
+        }
+
+        function handleTextInputChange() {
+            const input = document.getElementById('chatInput');
+            const track = document.getElementById('taskPillTrack');
+            const micBtn = document.getElementById('micButton');
+            const waveformSvg = document.getElementById('waveformSvgIcon');
+            const sendArrow = document.getElementById('sendArrowIcon');
+
+            if (!input) return;
+            const hasText = input.value.trim().length > 0;
+
+            if (track && !pillsDismissedForever) {
+                if (hasText) {
+                    track.classList.add('pill-track-collapsed');
+                } else {
+                    track.classList.remove('pill-track-collapsed');
+                }
+            }
+
+            if (hasText) {
+                if (micBtn) micBtn.classList.add('hidden');
+                if (waveformSvg) waveformSvg.classList.add('hidden');
+                if (sendArrow) sendArrow.classList.remove('hidden');
+            } else {
+                if (micBtn) micBtn.classList.remove('hidden');
+                if (waveformSvg) waveformSvg.classList.remove('hidden');
+                if (sendArrow) sendArrow.classList.add('hidden');
+            }
+        }
+
+        function handleDynamicAction() {
+            const input = document.getElementById('chatInput');
+            if (input && input.value.trim().length > 0) {
+                handleSendMessage();
+            } else {
+                startVoiceDictation();
+            }
+        }
+
+        async function startVoiceDictation() {
+            if (transcribingTimeout) {
+                clearTimeout(transcribingTimeout);
+                transcribingTimeout = null;
+            }
+            liveTranscribedText = '';
+            isRecording = true;
+            isSimulatedVoice = false;
+            dictationStartTime = Date.now();
+
+            const idleView = document.getElementById('idleComposerView');
+            const recordingView = document.getElementById('recordingComposerView');
+            const transcribingView = document.getElementById('transcribingComposerView');
+            const orangeDot = document.getElementById('iosMicOrangeDot');
+
+            if (idleView) idleView.classList.add('hidden');
+            if (transcribingView) transcribingView.classList.add('hidden');
+            if (recordingView) recordingView.classList.remove('hidden');
+            if (orangeDot) orangeDot.classList.remove('opacity-0');
+
+            let micAccessGranted = false;
+
+            // Attempt real microphone access
+            try {
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+                    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                    if (AudioCtx) {
+                        audioContext = new AudioCtx();
+                        const source = audioContext.createMediaStreamSource(mediaStream);
+                        analyserNode = audioContext.createAnalyser();
+                        analyserNode.fftSize = 64;
+                        source.connect(analyserNode);
+                    }
+                    micAccessGranted = true;
+                }
+            } catch (err) {
+                console.warn('Microphone permission restricted, falling back to simulated dictation stream:', err);
+            }
+
+            // Attempt Web Speech Recognition API
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition && micAccessGranted) {
+                try {
+                    speechRecognition = new SpeechRecognition();
+                    speechRecognition.continuous = true;
+                    speechRecognition.interimResults = true;
+                    speechRecognition.lang = 'en-US';
+
+                    speechRecognition.onresult = (event) => {
+                        let transcript = '';
+                        for (let i = event.resultIndex; i < event.results.length; i++) {
+                            transcript += event.results[i][0].transcript;
+                        }
+                        liveTranscribedText = transcript;
+
+                        const chatInput = document.getElementById('chatInput');
+                        if (chatInput) {
+                            chatInput.value = transcript;
+                            handleTextInputChange();
+                        }
+                    };
+
+                    speechRecognition.onerror = (err) => {
+                        console.warn('Speech recognition notice, switching to auto-dictation stream:', err);
+                        if (!liveTranscribedText) {
+                            setupSimulatedDictation();
+                        }
+                    };
+
+                    speechRecognition.start();
+                } catch (e) {
+                    console.warn('Failed to start speech recognition:', e);
+                }
+            }
+
+            if (!micAccessGranted || !speechRecognition) {
+                isSimulatedVoice = true;
+                setupSimulatedDictation();
+            }
+
+            startWaveformAnimation();
+        }
+
+        function setupSimulatedDictation() {
+            const simulatedPhrases = [
+                "Summarize key takeaways from our team meeting.",
+                "Help me brainstorm innovative product features.",
+                "Draft a polite email to follow up on the proposal.",
+                "Quick lookup on current web design trends."
+            ];
+
+            const phrase = activeMode 
+                ? `Help me with ${activeMode.toLowerCase()} for our project.` 
+                : simulatedPhrases[Math.floor(Math.random() * simulatedPhrases.length)];
+
+            let charIdx = 0;
+            if (simulatedSpeechTimer) clearInterval(simulatedSpeechTimer);
+
+            simulatedSpeechTimer = setInterval(() => {
+                if (!isRecording) {
+                    clearInterval(simulatedSpeechTimer);
+                    return;
+                }
+                charIdx += 2;
+                liveTranscribedText = phrase.substring(0, charIdx);
+
+                const chatInput = document.getElementById('chatInput');
+                if (chatInput) {
+                    chatInput.value = liveTranscribedText;
+                    handleTextInputChange();
+                }
+
+                if (charIdx >= phrase.length) {
+                    clearInterval(simulatedSpeechTimer);
+                }
+            }, 120);
+        }
+
+        function stopVoiceDictation() {
+            isRecording = false;
+
+            if (simulatedSpeechTimer) {
+                clearInterval(simulatedSpeechTimer);
+                simulatedSpeechTimer = null;
+            }
+
+            if (speechRecognition) {
+                try { speechRecognition.stop(); } catch (e) {}
+                speechRecognition = null;
+            }
+
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+
+            if (audioContext) {
+                try { audioContext.close(); } catch (e) {}
+                audioContext = null;
+                analyserNode = null;
+            }
+
+            if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
+                animFrameId = null;
+            }
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+
+            const recordingView = document.getElementById('recordingComposerView');
+            const transcribingView = document.getElementById('transcribingComposerView');
+            const idleView = document.getElementById('idleComposerView');
+
+            if (recordingView) recordingView.classList.add('hidden');
+            if (idleView) idleView.classList.add('hidden');
+            if (transcribingView) transcribingView.classList.remove('hidden');
+
+            if (transcribingTimeout) clearTimeout(transcribingTimeout);
+
+            // Display "Transcribing" state for 1.4s before completing
+            transcribingTimeout = setTimeout(() => {
+                completeTranscriptionToIdle();
+            }, 1400);
+        }
+
+        function completeTranscriptionToIdle() {
+            if (transcribingTimeout) {
+                clearTimeout(transcribingTimeout);
+                transcribingTimeout = null;
+            }
+
+            const transcribingView = document.getElementById('transcribingComposerView');
+            const idleView = document.getElementById('idleComposerView');
+            const orangeDot = document.getElementById('iosMicOrangeDot');
+
+            if (transcribingView) transcribingView.classList.add('hidden');
+            if (idleView) idleView.classList.remove('hidden');
+            if (orangeDot) orangeDot.classList.add('opacity-0');
+
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput && liveTranscribedText.trim()) {
+                chatInput.value = liveTranscribedText.trim();
+            }
+
+            handleTextInputChange();
+        }
+
+        function cancelVoiceDictation() {
+            if (transcribingTimeout) {
+                clearTimeout(transcribingTimeout);
+                transcribingTimeout = null;
+            }
+            liveTranscribedText = '';
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.value = '';
+            }
+            isRecording = false;
+
+            if (simulatedSpeechTimer) {
+                clearInterval(simulatedSpeechTimer);
+                simulatedSpeechTimer = null;
+            }
+
+            if (speechRecognition) {
+                try { speechRecognition.stop(); } catch (e) {}
+                speechRecognition = null;
+            }
+
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+
+            if (audioContext) {
+                try { audioContext.close(); } catch (e) {}
+                audioContext = null;
+                analyserNode = null;
+            }
+
+            const recordingView = document.getElementById('recordingComposerView');
+            const transcribingView = document.getElementById('transcribingComposerView');
+            const idleView = document.getElementById('idleComposerView');
+            const orangeDot = document.getElementById('iosMicOrangeDot');
+
+            if (recordingView) recordingView.classList.add('hidden');
+            if (transcribingView) transcribingView.classList.add('hidden');
+            if (idleView) idleView.classList.remove('hidden');
+            if (orangeDot) orangeDot.classList.add('opacity-0');
+
+            handleTextInputChange();
+
+            if (animFrameId) {
+                cancelAnimationFrame(animFrameId);
+                animFrameId = null;
+            }
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
+        }
+
+        function stopAndSendVoice() {
+            if (transcribingTimeout) {
+                clearTimeout(transcribingTimeout);
+                transcribingTimeout = null;
+            }
+            const durationSeconds = Math.max(1, Math.round((Date.now() - dictationStartTime) / 1000));
+            let spokenText = liveTranscribedText.trim();
+
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput && chatInput.value.trim()) {
+                spokenText = chatInput.value.trim();
+            }
+
+            if (!spokenText) {
+                spokenText = activeMode 
+                    ? `Help me with ${activeMode.toLowerCase()} using voice dictation.`
+                    : "Can you summarize the key points from our latest discussion?";
+            }
+
+            isRecording = false;
+            if (simulatedSpeechTimer) { clearInterval(simulatedSpeechTimer); simulatedSpeechTimer = null; }
+            if (speechRecognition) { try { speechRecognition.stop(); } catch (e) {} speechRecognition = null; }
+            if (mediaStream) { mediaStream.getTracks().forEach(track => track.stop()); mediaStream = null; }
+            if (audioContext) { try { audioContext.close(); } catch (e) {} audioContext = null; analyserNode = null; }
+
+            const recordingView = document.getElementById('recordingComposerView');
+            const transcribingView = document.getElementById('transcribingComposerView');
+            const idleView = document.getElementById('idleComposerView');
+            const orangeDot = document.getElementById('iosMicOrangeDot');
+
+            if (recordingView) recordingView.classList.add('hidden');
+            if (transcribingView) transcribingView.classList.add('hidden');
+            if (idleView) idleView.classList.remove('hidden');
+            if (orangeDot) orangeDot.classList.add('opacity-0');
+
+            if (animFrameId) { cancelAnimationFrame(animFrameId); animFrameId = null; }
+
+            const emptyState = document.getElementById('emptyChatState');
+            if (emptyState) emptyState.remove();
+
+            onVoicePromptComplete(spokenText, durationSeconds);
+            appendUserMessage(`🎙️ "${spokenText}"`);
+            
+            if (chatInput) {
+                chatInput.value = '';
+                handleTextInputChange();
+            }
+
+            setTimeout(() => {
+                appendBotResponse(`I heard you say: "${spokenText}". How can I help you with this?`);
+                checkAndRenderWeeklySummaryCard();
+            }, 600);
+        }
+
+        function startWaveformAnimation() {
+            const canvas = document.getElementById('waveformCanvas');
+            if (!canvas) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            canvas.width = rect.width * (window.devicePixelRatio || 2);
+            canvas.height = rect.height * (window.devicePixelRatio || 2);
+
+            const ctx = canvas.getContext('2d');
+            const dataArray = analyserNode ? new Uint8Array(analyserNode.frequencyBinCount) : null;
+
+            function draw() {
+                if (!isRecording) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const w = canvas.width;
+                const h = canvas.height;
+                const centerY = h / 2;
+                const numDots = 32;
+                const spacing = w / (numDots - 1);
+
+                if (analyserNode && dataArray) {
+                    analyserNode.getByteFrequencyData(dataArray);
+                }
+
+                const time = Date.now() * 0.009;
+
+                for (let i = 0; i < numDots; i++) {
+                    const x = i * spacing;
+                    let amplitude = 0;
+
+                    if (analyserNode && dataArray && dataArray.length > 0) {
+                        const binIndex = Math.floor((i / numDots) * dataArray.length);
+                        amplitude = (dataArray[binIndex] || 0) / 255;
+                    } else {
+                        const centerFactor = Math.sin((i / (numDots - 1)) * Math.PI);
+                        const wave1 = Math.sin(time * 3 + i * 0.35);
+                        const wave2 = Math.cos(time * 2 + i * 0.2);
+                        amplitude = Math.max(0, ((wave1 + wave2 + 0.5) / 2.5) * centerFactor);
+                    }
+
+                    const dotRadius = 2.2 * (window.devicePixelRatio || 2);
+                    const minBarHeight = dotRadius * 2;
+                    const maxBarHeight = h * 0.75;
+                    const barHeight = Math.max(minBarHeight, amplitude * maxBarHeight);
+
+                    if (barHeight > minBarHeight + 1) {
+                        ctx.strokeStyle = `rgba(225, 225, 230, ${0.7 + amplitude * 0.3})`;
+                        ctx.lineWidth = dotRadius * 2;
+                        ctx.lineCap = 'round';
+                        ctx.beginPath();
+                        ctx.moveTo(x, centerY - barHeight / 2);
+                        ctx.lineTo(x, centerY + barHeight / 2);
+                        ctx.stroke();
+                    } else {
+                        ctx.fillStyle = 'rgba(180, 180, 185, 0.45)';
+                        ctx.beginPath();
+                        ctx.arc(x, centerY, dotRadius, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                animFrameId = requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        function handleSendMessage() {
+            const input = document.getElementById('chatInput');
+            if (!input) return;
+            const text = input.value.trim();
+
+            if (!text && !activeMode) return;
+
+            const finalPrompt = activeMode ? `[${activeMode}] ${text || 'Help me with this task.'}` : text;
+            
+            const emptyState = document.getElementById('emptyChatState');
+            if (emptyState) emptyState.remove();
+
+            appendUserMessage(finalPrompt);
+
+            input.value = '';
+            handleTextInputChange();
+
+            setTimeout(() => {
+                appendBotResponse(`I received your request: "${finalPrompt}". How else can I assist you with this?`);
+            }, 600);
+        }
+
+        function appendUserMessage(text) {
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex justify-end w-full animate-fadeIn';
+            msgDiv.innerHTML = `
+                <div class="bg-[#007AFF] text-white px-3.5 py-2 rounded-2xl rounded-tr-xs max-w-[80%] text-xs shadow-sm font-normal break-words">
+                    ${escapeHtml(text)}
+                </div>
+            `;
+            container.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function appendBotResponse(text) {
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex justify-start w-full animate-fadeIn';
+            msgDiv.innerHTML = `
+                <div class="flex items-start gap-2 max-w-[85%]">
+                    <div class="w-5 h-5 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-[9px] shrink-0 mt-0.5">
+                        <i class="fa-solid fa-sparkles text-blue-400"></i>
+                    </div>
+                    <div class="bg-[#1c1c1e] text-zinc-100 border border-zinc-800/80 px-3 py-2 rounded-2xl rounded-tl-xs text-xs font-normal leading-relaxed break-words">
+                        ${escapeHtml(text)}
+                    </div>
+                </div>
+            `;
+            container.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            const mainCanvas = document.getElementById('chatMainCanvas');
+            if (mainCanvas) mainCanvas.scrollTop = mainCanvas.scrollHeight;
+        }
+
+        function escapeHtml(str) {
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        }
+
+        function toggleSidebar(show) {
+            const drawer = document.getElementById('sidebarDrawer');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (!drawer || !overlay) return;
+
+            if (show) {
+                drawer.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                drawer.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+        }
+
+        function startNewChat() {
+            const container = document.getElementById('messagesContainer');
+            if (container) {
+                container.innerHTML = `
+                    <div id="emptyChatState" class="flex flex-col items-center justify-center text-center py-6 space-y-2.5">
+                        <div class="w-11 h-11 rounded-full bg-[#1c1c1e] border border-zinc-800 flex items-center justify-center text-white text-lg shadow-lg">
+                            <i class="fa-solid fa-sparkles text-blue-400"></i>
+                        </div>
+                        <h3 class="text-white font-medium text-sm">What can I help with today?</h3>
+                        <p class="text-zinc-500 text-[11px] max-w-[220px]">Tap a task pill below or tap the microphone to dictate your prompt.</p>
+                    </div>
+                `;
+            }
+
+            const input = document.getElementById('chatInput');
+            if (input) input.value = '';
+            
+            clearActiveModePill();
+            handleTextInputChange();
+        }
 
         function toggleKeyboard(show) {
-            const kb = document.getElementById('simulatedKeyboard');
             const composerWrapper = document.getElementById('composerAreaWrapper');
             const label = document.getElementById('kbToggleLabel');
 
             if (show === undefined) {
-                keyboardVisible = !keyboardVisible;
+                isKeyboardOpen = !isKeyboardOpen;
             } else {
-                keyboardVisible = show;
+                isKeyboardOpen = show;
             }
 
-            if (keyboardVisible) {
-                kb.classList.remove('translate-y-full');
-                if (composerWrapper) composerWrapper.style.transform = 'translateY(-220px)';
+            if (isKeyboardOpen) {
+                if (composerWrapper) composerWrapper.style.transform = 'translateY(-180px)';
                 if (label) label.innerText = 'Hide KB';
             } else {
-                kb.classList.add('translate-y-full');
                 if (composerWrapper) composerWrapper.style.transform = 'translateY(0px)';
                 if (label) label.innerText = 'Show KB';
             }
         }
-        // ... existing script code ...
+
+        function onComposerFocus() {}
+
+        function calculateTimeSaved(transcribedText, audioDurationSeconds) {
+            const words = transcribedText.trim().split(/\s+/).filter(Boolean);
+            const wordCount = words.length;
+            const estimatedTypingTimeSeconds = (wordCount / 38) * 60;
+            const timeSavedSeconds = estimatedTypingTimeSeconds - audioDurationSeconds;
+            return Math.max(0, Math.round(timeSavedSeconds));
+        }
+
+        function onVoicePromptComplete(transcribedText, audioDurationSeconds) {
+            const words = transcribedText.trim().split(/\s+/).filter(Boolean).length;
+            const savedSeconds = calculateTimeSaved(transcribedText, audioDurationSeconds);
+
+            let currentCount = parseInt(localStorage.getItem('weekly_voice_count') || '0', 10);
+            let currentWords = parseInt(localStorage.getItem('weekly_word_count') || '0', 10);
+            let currentTimeSaved = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '0', 10);
+
+            localStorage.setItem('weekly_voice_count', currentCount + 1);
+            localStorage.setItem('weekly_word_count', currentWords + words);
+            localStorage.setItem('weekly_time_saved_seconds', currentTimeSaved + savedSeconds);
+
+            updateSettingsUI();
+        }
+
+        function checkAndRenderWeeklySummaryCard() {
+            const count = parseInt(localStorage.getItem('weekly_voice_count') || '0', 10);
+            const isDismissed = localStorage.getItem('weekly_summary_dismissed') === 'true';
+
+            if (count >= 3 && !isDismissed) {
+                renderWeeklySummaryCard();
+            }
+        }
+
+        function renderWeeklySummaryCard() {
+            if (document.getElementById('weeklySummaryCard')) return;
+
+            const container = document.getElementById('messagesContainer');
+            if (!container) return;
+
+            const count = localStorage.getItem('weekly_voice_count') || '3';
+            const words = localStorage.getItem('weekly_word_count') || '42';
+            const savedSecs = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '85', 10);
+
+            const minutes = Math.floor(savedSecs / 60);
+            const seconds = savedSecs % 60;
+            const formattedTime = minutes > 0 ? `${minutes} mins ${seconds} secs` : `${seconds} secs`;
+
+            const cardDiv = document.createElement('div');
+            cardDiv.id = 'weeklySummaryCard';
+            cardDiv.className = 'w-full mb-3 cursor-pointer animate-fadeIn';
+            cardDiv.onclick = function(e) { dismissWeeklySummaryCard(e); };
+
+            cardDiv.innerHTML = `
+                <div class="bg-[#212121] border border-[#303030] rounded-[16px] p-4 text-[#ececec] shadow-xl relative transition-all">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-sparkles text-[#9b9b9b] text-[12px]"></i>
+                            <span class="text-[#9b9b9b] text-[12px] font-semibold tracking-wider uppercase">Weekly Voice Summary</span>
+                        </div>
+                        <button onclick="dismissWeeklySummaryCard(event)" title="Dismiss" class="text-[#737373] hover:text-[#ececec] transition-colors p-1">
+                            <i class="fa-solid fa-xmark text-xs"></i>
+                        </button>
+                    </div>
+                    <p class="text-xs text-[#ececec] leading-relaxed">
+                        You dictated <span class="text-white font-semibold">${count} prompts</span> this week (~${words} words). 
+                        Estimated time saved: <span class="text-white font-semibold">${formattedTime}</span> vs. typing.
+                    </p>
+                </div>
+            `;
+
+            const emptyState = document.getElementById('emptyChatState');
+            if (emptyState) emptyState.remove();
+
+            container.insertBefore(cardDiv, container.firstChild);
+        }
+
+        function dismissWeeklySummaryCard(event) {
+            if (event) event.stopPropagation();
+            const card = document.getElementById('weeklySummaryCard');
+            if (card) {
+                card.classList.add('opacity-0', 'transition-opacity');
+                setTimeout(() => card.remove(), 200);
+            }
+            localStorage.setItem('weekly_summary_dismissed', 'true');
+        }
+
+        function forceShowWeeklySummary(event) {
+            if (event) event.stopPropagation();
+            localStorage.removeItem('weekly_summary_dismissed');
+            if (parseInt(localStorage.getItem('weekly_voice_count') || '0', 10) < 3) {
+                localStorage.setItem('weekly_voice_count', '3');
+                localStorage.setItem('weekly_word_count', '48');
+                localStorage.setItem('weekly_time_saved_seconds', '95');
+            }
+            renderWeeklySummaryCard();
+        }
+
+        function openSettingsModal() {
+            updateSettingsUI();
+            const modal = document.getElementById('settingsModal');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeSettingsModal() {
+            const modal = document.getElementById('settingsModal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function updateSettingsUI() {
+            const count = localStorage.getItem('weekly_voice_count') || '0';
+            const words = localStorage.getItem('weekly_word_count') || '0';
+            const savedSecs = parseInt(localStorage.getItem('weekly_time_saved_seconds') || '0', 10);
+
+            const promptEl = document.getElementById('settingsPromptCount');
+            const wordEl = document.getElementById('settingsWordCount');
+            const timeEl = document.getElementById('settingsTimeSaved');
+
+            if (promptEl) promptEl.innerText = count;
+            if (wordEl) wordEl.innerText = words;
+            if (timeEl) timeEl.innerText = `${savedSecs}s`;
+        }
+
+        function resetVoiceStats() {
+            localStorage.setItem('weekly_voice_count', '0');
+            localStorage.setItem('weekly_word_count', '0');
+            localStorage.setItem('weekly_time_saved_seconds', '0');
+            localStorage.removeItem('weekly_summary_dismissed');
+
+            const card = document.getElementById('weeklySummaryCard');
+            if (card) card.remove();
+
+            updateSettingsUI();
+        }
+
+        window.addEventListener('load', () => {
+            updateSettingsUI();
+            checkAndRenderWeeklySummaryCard();
+        });
+
+        document.addEventListener('click', function(e) {
+            const card = document.getElementById('weeklySummaryCard');
+            const triggerBtn = document.getElementById('summaryTriggerBtn');
+            if (card && !card.contains(e.target) && (!triggerBtn || !triggerBtn.contains(e.target))) {
+                dismissWeeklySummaryCard(e);
+            }
+        });
     </script>
 </body>
 </html>
